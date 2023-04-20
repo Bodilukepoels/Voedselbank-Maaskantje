@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-
+//wachtwoord confermatie en regristratie process
 if (isset($_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
     if ($_POST['password'] === $_POST['confirm_password']) {
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);

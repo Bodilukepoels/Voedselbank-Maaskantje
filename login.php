@@ -1,12 +1,12 @@
 <?php
 require_once 'config.php';
-
+//helpt om sneller in te loggen
 if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     $sql = "SELECT * FROM user WHERE Email = :Email";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':Email', $_POST['Email']);
     $stmt->execute();
-
+//word weer doorgestuurd naar goede pagina na correcte inlog
     if ($stmt->rowCount() === 1) {
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
         if (password_verify($_POST['Wachtwoord'], $admin['Wachtwoord'])) {
@@ -14,7 +14,7 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
             exit();
         }
     }
-
+//error voor incorrecte inlog
     echo "Incorrecte wachtwoord of email probeer opnieuw.";
 }?>
 

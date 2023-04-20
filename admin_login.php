@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-
+//wachtwoord en username van de adim
 if (isset($_POST['username'], $_POST['password'])) {
     $sql = "SELECT * FROM admins WHERE username = :username";
     $stmt = $conn->prepare($sql);
@@ -18,7 +18,7 @@ if (isset($_POST['username'], $_POST['password'])) {
 
     echo "Incorrecte wachtwoord of gebruikers naam probeer opnieuw.";
 }
-
+//als je goeieinlog gegevens hebt gegeven dan word je doorgestuurd naar de admin pagina
 if (isset($_COOKIE['admin_logged_in']) && $_COOKIE['admin_logged_in'] == "true") {
     echo "logged in";
     header("Location: admin.php");

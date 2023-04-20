@@ -5,7 +5,7 @@ if (isset($_POST['username'], $_POST['password'], $_POST['confirm_password'])) {
     if ($_POST['password'] === $_POST['confirm_password']) {
         $username = $_POST['username'];
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
+//voor de password hash en regristratie gegevens
         try {
             $sql = "INSERT INTO admins (username, password_hash) VALUES (:username, :password_hash)";
             $stmt = $conn->prepare($sql);
@@ -23,9 +23,9 @@ if (isset($_POST['username'], $_POST['password'], $_POST['confirm_password'])) {
                 echo "Error: " . $e->getMessage();
             }
         }
-    } else {
+    } else {//error als het niet hetzelde is
         echo "Wachtwoorden zijn niet hetzelfde!";
-    }
+    }//doorstuur code 
 } else {
     header("Location: register.php");
     exit();

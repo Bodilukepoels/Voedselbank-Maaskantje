@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="navigation.css">
 <section style="height: 0rem">
       <center>
         <div>

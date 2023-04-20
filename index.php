@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <a href="login.php">Login</a> </br>
-        <a href="register.php">Register</a>
+    <?php
+    include 'navigation.php';
+
+    ?>
     <h1>Voedselbank Maaskant</h1>
     <table>
         <thead>

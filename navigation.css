@@ -1,4 +1,4 @@
-.nav_bar_bar {
+.nav_bar {
     position: relative;
     width: 600px;
     height: 50px;
@@ -8,7 +8,7 @@
     font-size: 0px;
   }
   
-  .nav_bar_bar_bar a {
+  .nav_bar a {
     font-size: 12px;
     text-transform: uppercase;
     color: white;

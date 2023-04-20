@@ -1,5 +1,8 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  background-image: linear-gradient(rgba(225, 225, 225), rgb(135, 135, 135));
+  overflow: hidden;
 }
 
 table {
@@ -16,4 +19,49 @@ td {
 
 th {
   background-color: #f2f2f2;
+}
+
+.container {
+  box-shadow: 20px 20px 30px -3px black;
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background: linear-gradient(rgba(134, 134, 134, 0.7), rgb(154, 154, 154));
+  /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 450px;
+  padding: 60px;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 40px;
+  height: 50%;
+}
+input {
+  width: 200px;
+  height: 20px;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+.noacc {
+  font-size: 10px;
+  text-decoration: none;
+}
+#link {
+  text-decoration: none;
+}
+#login {
+  background-color: white;
+  cursor: pointer;
+  transition: all 1s;
+}
+
+#login:hover {
+  background-color: rgb(195, 195, 195);
+  transition: all 1s;
 }

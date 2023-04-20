@@ -37,14 +37,16 @@ if (isset($_COOKIE['admin_logged_in']) && $_COOKIE['admin_logged_in'] == "true")
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
     <h1>Admin Login</h1>
     <form action="admin_login.php" method="post">
-        <label for="username">Gebruikers Naam:</label>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">Wachtwoord:</label>
-        <input type="password" name="password" id="password" required><br>
-        <input type="submit" value="Login">
+        <label for="username">Gebruikersnaam:</label> <Br>
+        <input type="text" name="username" id="username" placeholder= "..." required><br>
+        <label for="password">Wachtwoord:</label> <Br>
+        <input type="password" name="password" id="password" placeholder="..." required><br>
+        <input style="width: 100px;" type="submit" id="login" value="Login">
     </form>
-    <a href="register.php">Registreer</a>
+     <h2 class="noacc">Geen account? <a href="register.php" id="link">Klik hier.</a></h2>
+    </div>
 </body>
 </html>

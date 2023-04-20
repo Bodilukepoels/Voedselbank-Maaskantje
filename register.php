@@ -20,6 +20,7 @@
     </script>
 </head>
 <body> <!--- formulier voor registratie --->
+    <div class="container">
         <?php
     include 'navigation.php';
     ?>
@@ -48,5 +49,6 @@
 
         <input type="submit" value="Registreer"><br>
     </form>
+    </div>
 </body>
 </html>

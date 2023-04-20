@@ -30,6 +30,7 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
         <?php
     include 'navigation.php';
     ?>
+    <div class="container">
     <h1>Login</h1>
     <form action="login.php" method="post">
         <label for="email">Email:</label>
@@ -38,6 +39,7 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
         <input type="password" name="Wachtwoord" id="Wachtwoord" required><br><br>
         <input type="submit" value="Login"><br>
     </form>
+    </div>
 </br>
     <a href="register.php">Registreer</a>
 </body>

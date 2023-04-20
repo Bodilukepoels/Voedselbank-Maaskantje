@@ -37,6 +37,9 @@ if (isset($_COOKIE['admin_logged_in']) && $_COOKIE['admin_logged_in'] == "true")
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+        <?php
+    include 'navigation.php';
+    ?>
     <div class="container">
     <h1>Admin Login</h1>
     <form action="admin_login.php" method="post">

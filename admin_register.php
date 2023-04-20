@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+        <?php
+    include 'navigation.php';
+    ?>
     <h1>Register Admin</h1>
     <form action="adminregister_process.php" method="post">
         <label for="username">Username:</label>

@@ -27,6 +27,9 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+        <?php
+    include 'navigation.php';
+    ?>
     <h1>Login</h1>
     <form action="login.php" method="post">
         <label for="email">Email:</label>

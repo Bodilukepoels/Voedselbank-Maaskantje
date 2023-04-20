@@ -20,6 +20,9 @@
     </script>
 </head>
 <body> <!--- formulier voor registratie --->
+        <?php
+    include 'navigation.php';
+    ?>
     <h1>Registreer Account</h1>
     <form action="register_process.php" method="post" onsubmit="return validateForm()">
         <label for="username">Gebruikers Naam:</label>

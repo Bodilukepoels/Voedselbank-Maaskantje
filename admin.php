@@ -18,6 +18,9 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+            <?php
+    include 'navigation.php';
+    ?>
         <h1>Admin Dashboard</h1>
         <table>  
         <thead>

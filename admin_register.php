@@ -10,12 +10,12 @@
     <h1>Register Admin</h1>
     <form action="adminregister_process.php" method="post">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
+        <input type="text" name="username" id="username" required><br><br>
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
+        <input type="password" name="password" id="password" required><br><br>
         <label for="confirm_password">Confirm Password:</label>
-        <input type="password" name="confirm_password" id="confirm_password" required><br>
-        <input type="submit" value="Register">
+        <input type="password" name="confirm_password" id="confirm_password" required><br><br>
+        <input type="submit" value="Register"><br>
     </form>
 </body>
 </html>

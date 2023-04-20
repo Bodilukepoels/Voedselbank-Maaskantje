@@ -1,4 +1,5 @@
     <?php
+    //admin cookies
     if (!isset($_COOKIE['admin_logged_in']) || $_COOKIE['admin_logged_in'] !== "true") {
         echo "logged in";
         header("Location: admin_login.php");
@@ -27,25 +28,25 @@
             </tr>
         </thead>   
         <tbody>   
-        <td>  
+        <td>  <!-- event form -->
         <form action="add_event.php" method="post">
             <label for="event_name">Event Name:</label>
-            <input type="text" name="event_name" id="event_name" required><br>
+            <input type="text" name="event_name" id="event_name" required><br><br>
             <label for="event_date">Date:</label>
-            <input type="date" name="event_date" id="event_date" required><br>
+            <input type="date" name="event_date" id="event_date" required><br><br>
             <label for="start_time">Start Time:</label>
-            <input type="time" name="start_time" id="start_time" required><br>
+            <input type="time" name="start_time" id="start_time" required><br><br>
             <label for="price">Price:</label>
-            <input type="number" name="price" id="price" step="0.01" min="0" required><br>
+            <input type="number" name="price" id="price" step="0.01" min="0" required><br><br>
             <input type="submit" value="Create Event">
         </form>
         </td>
         <td>
         <form action="add_band.php" method="post">
             <label for="band_name">Band Name:</label>
-            <input type="text" name="band_name" id="band_name" required><br>
+            <input type="text" name="band_name" id="band_name" required><br><br>
             <label for="genre">Genre:</label>
-            <input type="text" name="genre" id="genre" required><br>
+            <input type="text" name="genre" id="genre" required><br><br>
             <input type="submit" value="Add Band">
         </form>
         </td>
@@ -65,6 +66,7 @@
             <label for="band_id">Band:</label>
             <select name="band_id" id="band_id">
                 <?php
+                //database connection
                 $sql = "SELECT id, name FROM bands";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();

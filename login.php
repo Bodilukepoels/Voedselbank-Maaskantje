@@ -30,10 +30,10 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <h1>Login</h1>
     <form action="login.php" method="post">
         <label for="email">Email:</label>
-        <input type="text" name="Email" id="Email" required><br>
+        <input type="text" name="Email" id="Email" required><br><br>
         <label for="password">Wachtwoord:</label>
-        <input type="password" name="Wachtwoord" id="Wachtwoord" required><br>
-        <input type="submit" value="Login">
+        <input type="password" name="Wachtwoord" id="Wachtwoord" required><br><br>
+        <input type="submit" value="Login"><br>
     </form>
 </br>
     <a href="register.php">Registreer</a>

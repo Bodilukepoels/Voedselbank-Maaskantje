@@ -1,19 +1,21 @@
 <?php
 require_once 'config.php';
 
-if (isset($_POST['username'], $_POST['password'], $_POST['confirm_password'])) {
+if (isset($_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
     if ($_POST['password'] === $_POST['confirm_password']) {
-        $username = $_POST['username'];
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
+        print_r($_POST);
         try {
-            $sql = "INSERT INTO admins (username, password_hash) VALUES (:username, :password_hash)";
+            $sql = "INSERT INTO user (Email, Wachtwoord, Naam, Adres, Telefoonnummer) VALUES (:Email, :Wachtwoord, :Naam, :Adres, :Telefoonnummer)";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':password_hash', $password_hash);
+            $stmt->bindParam(':Email', $_POST['email']);
+            $stmt->bindParam(':Wachtwoord', $password_hash);
+            $stmt->bindParam(':Naam', $_POST['naam']);
+            $stmt->bindParam(':Adres', $_POST['adres']);
+            $stmt->bindParam(':Telefoonnummer', $_POST['telefoonnummer']);
             $stmt->execute();
 
-            header("Location: admin_login.php");
+            header("Location: login.php");
             exit();
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
@@ -26,7 +28,8 @@ if (isset($_POST['username'], $_POST['password'], $_POST['confirm_password'])) {
     } else {
         echo "Wachtwoorden zijn niet hetzelfde!";
     }
-} else {
+} /*else {
     header("Location: register.php");
     exit();
 }
+*/

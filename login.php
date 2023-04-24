@@ -33,14 +33,13 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <div class="container">
     <h1>Login</h1>
     <form action="login.php" method="post">
-        <label for="email">Email:</label>
-        <input type="text" name="Email" id="Email" required><br><br>
-        <label for="password">Wachtwoord:</label>
-        <input type="password" name="Wachtwoord" id="Wachtwoord" required><br><br>
-        <input type="submit" value="Login"><br>
+    <label for="username">Gebruikersnaam:</label> <Br>
+        <input type="text" name="username" id="username" placeholder= "..." required><br><br>
+        <label for="password">Wachtwoord:</label> <Br>
+        <input type="password" name="password" id="password" placeholder="..." required><br><br>
+        <input style="width: 100px;" type="submit" id="login" value="Login"><br>
     </form>
+     <h2 class="noacc">Geen account? <a href="register.php" id="link">Klik hier.</a></h2>
     </div>
-</br>
-    <a href="register.php">Registreer</a>
 </body>
 </html>

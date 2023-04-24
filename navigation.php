@@ -3,7 +3,7 @@
 <center>
   <div>
     <nav class="nav_bar">
-      <a href="Index.php">Home</a>
+      <a href="index.php">Home</a>
       <a href="login.php">Login</a>
       <a href="register.php">Aanmelden</a>
       <a href="alleproducten.php">Alle producten</a>

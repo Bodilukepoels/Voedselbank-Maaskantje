@@ -41,7 +41,7 @@
         <label for="confirm_password">Wachtwoord Bevestigen:</label>
         <input type="password" name="confirm_password" id="confirm_password" required><br><br>
 
-        <input type="submit" value="Registreer"><br>
+        <input type="submit" id="login" value="Registreer"><br>
     </form>
     </div>
 </body>

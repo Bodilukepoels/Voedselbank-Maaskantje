@@ -10,6 +10,7 @@
         <?php
     include 'navigation.php';
     ?>
+    <div class="container">
     <h1>Register Admin</h1>
     <form action="adminregister_process.php" method="post">
         <label for="username">Username:</label>
@@ -20,5 +21,6 @@
         <input type="password" name="confirm_password" id="confirm_password" required><br><br>
         <input type="submit" value="Register"><br>
     </form>
+</div>
 </body>
 </html>

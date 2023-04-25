@@ -32,14 +32,14 @@ th {
   position: absolute;
   top: 50%;
   left: 50%;
+  height: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
   width: 450px;
-  padding: 60px;
+  padding: 10px;
   text-align: center;
   border-radius: 20px;
   line-height: 40px;
-  height: 50%;
 }
 input {
   width: 200px;

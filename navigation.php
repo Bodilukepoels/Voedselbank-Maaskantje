@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" media="screen" href="navigation.css" />
+</head>
+<body>
   <?php
   session_start();
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
@@ -21,6 +27,6 @@
       </div>
     </center>
   </section>
-<?php
-}
-?>
+  <?php
+  }
+  ?>

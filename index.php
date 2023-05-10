@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <center>
-        <h1>Voedselbank Maaskant</h1>
-    </center>
     <?php
-    session_start();
+    include 'navigation.php';
+    echo "<h1>Voedselbank Maaskant</h1>";
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         echo "<div class='container'>
         <h2>je bent een mens</h2>"

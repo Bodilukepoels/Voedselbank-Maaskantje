@@ -7,28 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php
-    include 'navigation.php';
-    ?>
-    <h1>Voedselbank Maaskant</h1>
-    <div class="product-grid">
-        <?php
-        require_once 'config.php';
-
-        $sql = "SELECT * FROM producten";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<div class='product-card'>
-                    <a href='product.php?id={$row['id']}'>
-                        <img src='img/{$row['image']}' alt='{$row['naam']}' />
-                        <h3>{$row['naam']}</h3>
-                    </a>
-                  </div>";
-        }
-        ?>
+    <center>
+        <h1>Voedselbank Maaskant</h1>
+    </center>
+    <div class="container">
+        <h2>Hallo mederwerker!</h2>
+        <a href="login.php"><h1>Login</h1></a>
     </div>
-
 </body>
 </html>

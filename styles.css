@@ -32,7 +32,7 @@ th {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 50%;
+  height: 400px;
   transform: translate(-50%, -50%);
   z-index: 2;
   width: 450px;
@@ -54,6 +54,7 @@ input {
 }
 #link {
   text-decoration: none;
+  color: blue;
 }
 #login {
   background-color: white;

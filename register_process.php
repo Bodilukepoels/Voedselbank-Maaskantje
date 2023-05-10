@@ -27,8 +27,4 @@ if (isset($_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
     } else {
         echo "Wachtwoorden zijn niet hetzelfde!";
     }
-} /*else {
-    header("Location: register.php");
-    exit();
 }
-*/

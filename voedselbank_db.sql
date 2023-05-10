@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2023 at 01:43 PM
+-- Generation Time: May 10, 2023 at 12:47 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -86,7 +86,7 @@ CREATE TABLE `producten` (
 
 INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `voorraad`, `EAN-Nummer`, `image`) VALUES
 (1, 'Product 1', 'Product 1 beschrijving', 100, 'EAN-11', 'Product1.png'),
-(2, 'Product 2 ', 'Product 2 beschrijven', 999, 'EAN-22', '');
+(2, 'Product 2 ', 'Product 2 beschrijven', 999, 'EAN-22', 'Product1.png');
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`AccountID`, `Email`, `Wachtwoord`, `Naam`, `Telefoonnummer`, `IsAdmin`) VALUES
 (1, 'joris@joris.nl', '$2y$10$5i1nXjle256QS6J.uFJAcur5HNx6yeLnBLym0IrFiABLXmKPf/H6a', 'joris', '0612345678', 0),
 (2, 'gaming@gmail.com', '$2y$10$hDNissTX5KJ3n73JGqKF9.jCQ0.iM0NMi2FcjMlQrf4UkSMaTe6uW', 'ik ben een gebruiker', '069999999', 0),
-(3, 'billy@billy.com', '$2y$10$qzgN.m.TNfhaP8zV5qceF.ObbVgud.8dwaNTC/dEakdnP3fiQroUG', 'Billy', '06245677422', 0);
+(3, 'billy@billy.com', '$2y$10$qzgN.m.TNfhaP8zV5qceF.ObbVgud.8dwaNTC/dEakdnP3fiQroUG', 'Billy', '06245677422', 0),
+(4, 'beingchilling@china.com', '$2y$10$uL/.d1xPGVyeVEdfeU5Dv.p1VmKPFCwp8F8PGV8cFosa8h6d0x6nq', 'benjemens?', '-', 0),
+(5, 'bodi@gmail.com', '$2y$10$Yr46.7IEpW7PBda74sfDFuSDJuk4yMXt1D8CBqRRI6rgNfVMhy9PO', 'bodi', 'bodi', 0);
 
 --
 -- Indexes for dumped tables
@@ -179,7 +181,7 @@ ALTER TABLE `producten`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

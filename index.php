@@ -11,11 +11,7 @@
     include 'navigation.php';
     echo "<h1>Voedselbank Maaskant</h1>";
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-        echo "<div class='container'>
-        <h2>je bent een mens</h2>"
-        . $_SESSION['user_name'] . 
-        "<a href='logout.php'><h1>Logout</h1></a></div>
-        ";
+        include "indexcontents.php";
     }
     else{
         echo "<div class='container'>

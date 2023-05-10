@@ -10,9 +10,21 @@
     <center>
         <h1>Voedselbank Maaskant</h1>
     </center>
-    <div class="container">
+    <?php
+    session_start();
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        echo "<div class='container'>
+        <h2>je bent een mens</h2>"
+        . $_SESSION['user_name'] . 
+        "<a href='logout.php'><h1>Logout</h1></a></div>
+        ";
+    }
+    else{
+        echo "<div class='container'>
         <h2>Hallo mederwerker!</h2>
-        <a href="login.php"><h1>Login</h1></a>
-    </div>
+        <a href='login.php'><h1>Login</h1></a>
+    </div>";
+    }
+    ?>
 </body>
 </html>

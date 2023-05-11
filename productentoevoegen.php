@@ -17,14 +17,16 @@
         <input type="text" id="naam" name="naam" required><br>
         <label for="beschrijving">Beschrijving:</label>
         <input type="text" id="beschrijving" name="beschrijving" required><br>
-        <label for="voorraad">voorraad:</label>
+        <label for="voorraad">Voorraad:</label>
         <input type="number" id="voorraad" name="voorraad" required><br>
         <label for="eanNummer">EAN Nummer:</label>
         <input type="text" id="eanNummer" name="eanNummer" required><br>
+        <label for="image">Image:</label>
+        <input type="text" id="image" name="image" required><br>
         <input type="submit" value="Add Product">
     </form>
 
-    <h2>Bestaand producten</h2>
+    <h2>Bestaande producten</h2>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -32,6 +34,7 @@
             <th>Beschrijving</th>
             <th>Voorraad</th>
             <th>EAN Nummer</th>
+            <th>Actions</th>
         </tr>
         <?php
         include 'config.php';
@@ -41,7 +44,6 @@
             $beschrijving = $_POST['beschrijving'];
             $voorraad = $_POST['voorraad'];
             $eanNummer = $_POST['eanNummer'];
-            $image = $_POST['image'];
 
             try {
                 $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`, image) VALUES (?, ?, ?, ?, ?)";
@@ -65,10 +67,10 @@
                 echo "<td>" . $product['beschrijving'] . "</td>";
                 echo "<td>" . $product['voorraad'] . "</td>";
                 echo "<td>" . $product['EAN-Nummer'] . "</td>";
+                echo "<td><a href='edit_product.php?id=" . $product['id'] . "'>Edit</a></td>";
                 echo "</tr>";
             }
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
         ?>

@@ -14,7 +14,7 @@
         <nav class="nav_bar">
           <div onclick="location.href='index.php';"><a href="index.php">Home</a></div>
           <div onclick="location.href='alleproducten.php';"><a href="alleproducten.php">Producten</a></div>
-          <div onclick="location.href='productentoevoegen.php';"><a href="productentoevoegen.php">ProductenToevoegen</a></div>
+          <div onclick="location.href='productentoevoegen.php';"><a href="productentoevoegen.php">Producten Toevoegen</a></div>
           <div class="dropdown">
             <div style= 'color: black;'>Welkom, <?php echo $_SESSION['user_name']; ?></div>
             <div class="dropdown-content">

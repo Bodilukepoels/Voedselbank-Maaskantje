@@ -6,7 +6,7 @@ if (isset($_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         print_r($_POST);
         try {
-            $sql = "INSERT INTO user (Email, Wachtwoord, Naam, Telefoonnummer) VALUES (:Email, :Wachtwoord, :Naam, :Telefoonnummer)";
+            $sql = "INSERT INTO user (Email, Wachtwoord, Naam, Telefoonnummer, IsAdmin) VALUES (:Email, :Wachtwoord, :Naam, :Telefoonnummer, 0)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':Email', $_POST['email']);
             $stmt->bindParam(':Wachtwoord', $password_hash);

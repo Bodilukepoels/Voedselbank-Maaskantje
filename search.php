@@ -1,4 +1,12 @@
+
+<!-- HTML form for the search bar -->
+<form method="POST">
+    <input type="text" name="search" placeholder="Search by EAN number or product name">
+    <button type="submit">Search</button>
+</form>
 <?php
+require_once 'config.php';
+
 // Your database connection code here
 
 // Check if a search query is submitted
@@ -20,10 +28,9 @@ if (isset($_POST['search'])) {
     if ($result) {
         // Product found, display the product information
         foreach ($result as $row) {
-            echo "Product Name: " . $row['naam'] . "<br>";
-            echo "Product Description: " . $row['beschrijving'] . "<br>";
+            echo "Product Naam: " . $row['naam'] . "<br>";
+            echo "Product Beschrijving: " . $row['beschrijving'] . "<br>";
             echo "Product EAN: " . $row['EAN-Nummer'] . "<br>";
-            echo "Product Image: <img src='" . $row['image'] . "'><br>";
             echo "<hr>";
         }
     } else {
@@ -32,9 +39,3 @@ if (isset($_POST['search'])) {
     }
 }
 ?>
-
-<!-- HTML form for the search bar -->
-<form method="POST">
-    <input type="text" name="search" placeholder="Search by EAN number or product name">
-    <button type="submit">Search</button>
-</form>

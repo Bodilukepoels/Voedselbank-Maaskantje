@@ -12,7 +12,7 @@
     ?>
     <h1>Producten toevoegen</h1>
     <h2>Add a new product</h2>
-    <form action="products.php" method="POST">
+    <form action="alleproducten.php" method="POST">
         <label for="naam">Name:</label>
         <input type="text" id="naam" name="naam" required><br>
         <label for="beschrijving">Beschrijving:</label>
@@ -44,9 +44,10 @@
             $beschrijving = $_POST['beschrijving'];
             $voorraad = $_POST['voorraad'];
             $eanNummer = $_POST['eanNummer'];
+            $image = $_POST['image'];
 
             try {
-                $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`, image) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`, `image`) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer, $image]);
             } catch (PDOException $e) {

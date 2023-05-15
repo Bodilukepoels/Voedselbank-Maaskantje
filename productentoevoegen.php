@@ -13,7 +13,7 @@
 
 <h1>Producten toevoegen</h1>
 <h2>Add a new product</h2>
-<form style="display:block; line-height: 5px" action="alleproducten.php" method="POST">
+<form style="display:block; line-height: 5px" action="productentoevoegen.php" method="POST">
     <label style="padding-right: 60px;" for="naam">Name:</label>
     <input type="text" id="naam" name="naam" required style="border: 1px solid gray; margin-top: 5px"><br>
     <label style="padding-right: 16px;" for="beschrijving">Beschrijving:</label>
@@ -24,7 +24,7 @@
     <input type="text" id="eanNummer" name="eanNummer" required style="border: 1px solid gray; margin-top: 5px"><br>
     <label style="padding-right: 58px;" for="image">Image:</label>
     <input type="text" id="image" name="image" required style="border: 1px solid gray; margin-top: 5px"><br><br>
-    <input style="cursor:pointer"type="submit" value="Add Product">
+    <input style="cursor:pointer" type="submit" value="Add Product">
 </form>
 
 

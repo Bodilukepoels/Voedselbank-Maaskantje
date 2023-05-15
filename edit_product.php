@@ -7,13 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $beschrijving = $_POST['beschrijving'];
     $voorraad = $_POST['voorraad'];
     $eanNummer = $_POST['eanNummer'];
-    $image = $_POST['image'];
 
     try {
         $sql = "UPDATE producten SET naam = ?, beschrijving = ?, voorraad = ?, `EAN-Nummer` = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer, $id]);
-        echo "Product updated successfully.";
+        header("Location: productentoevoegen.php?success=1");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

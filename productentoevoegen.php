@@ -39,6 +39,12 @@
         <?php
         include 'config.php';
 
+        if (isset($_GET['success']) && $_GET['success'] == 1) {
+            echo "Product updated successfully.";
+        } else if (isset($_GET['success']) && $_GET['success'] <> 1){
+            echo "Something went wrong.";
+        }
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $naam = $_POST['naam'];
             $beschrijving = $_POST['beschrijving'];

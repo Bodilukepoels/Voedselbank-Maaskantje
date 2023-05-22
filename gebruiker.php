@@ -9,7 +9,6 @@
 <body>
     <?php
     include 'navigation.php';
-
     ?>
     <h1>Voedselbank Maaskant</h1>
     <table>

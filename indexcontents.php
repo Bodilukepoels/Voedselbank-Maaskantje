@@ -1,6 +1,6 @@
-<!---dit staat er als je ingelogd bent--->
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 	<div class="container">
-	<h2>je bent een mens</h2> <?php echo $_SESSION['user_name']; ?> 
+	<h2>Welkom, <?php echo $_SESSION['user_name']; ?>!</h2>  
 	<a href="logout.php"><h1>Logout</h1></a>
-	<p>peinus</p>
 	</div>

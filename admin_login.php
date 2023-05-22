@@ -25,7 +25,6 @@ if (isset($_COOKIE['admin_logged_in']) && $_COOKIE['admin_logged_in'] == "true")
     exit();
 }
 
-
 ?>
 
 <!DOCTYPE html>

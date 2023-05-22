@@ -40,20 +40,26 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <h1>Edit Product</h1>
     <form action="edit_product.php" method="POST">
-        <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-        <label for="naam">Name:</label>
+        <div style="display: flex;">
+
+        <div style="width: 120px;"><label for="naam">Naam:</label>
+        <label for="beschrijving">Beschrijving:</label>
+        <label for="voorraad">Voorraad:</label>
+        <label for="eanNummer">EAN Nummer:</label></div>
+
+        <div style="width: 120px; line-height: 26px;"><input type="hidden" name="id" value="<?php echo $product['id']; ?>">
         <input type="text" id="naam" name="naam" value="<?php echo $product['naam']; ?>" required><br>
-        <label for="beschrijving">Description:</label>
         <input type="text" id="beschrijving" name="beschrijving" value="<?php echo $product['beschrijving']; ?>" required><br>
-        <label for="voorraad">Stock:</label>
         <input type="number" id="voorraad" name="voorraad" value="<?php echo $product['voorraad']; ?>" required><br>
-        <label for="eanNummer">EAN Number:</label>
         <input type="text" id="eanNummer" name="eanNummer" value="<?php echo $product['EAN-Nummer']; ?>" required><br>
+        </div></div>
         <input type="submit" value="Update Product">
+
     </form>
 </body>
 </html>

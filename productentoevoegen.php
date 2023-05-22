@@ -1,4 +1,4 @@
-<? php
+<?php
    
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1 class="text-center mb-4">Nieuwe product toevoegen</h1>
+                <h1 style="color: black" class="text-center mb-4">Nieuwe product toevoegen</h1>
                 <form action="productentoevoegen.php" method="POST">
                     <div class="form-group">
                         <label>Product Naam:</label>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <h2 class="text-center mt-5">Bestaande producten</h2>
+        <h2 style="color: black;" class="text-center mt-5">Bestaande producten</h2>
         <div class="table-responsive mt-4">
             <table class="table table-striped">
                 <thead>
@@ -58,9 +58,9 @@
                         include 'config.php';
 
                         if (isset($_GET['success']) && $_GET['success'] == 1) {
-                            echo "Het product is successvol bijgewerkt";
+                            echo  "<CENTER><h6 style='color: black;'>Het product is successvol bijgewerkt.<h6></CENTER>";
                         } else if (isset($_GET['success']) && $_GET['success'] <> 1){
-                            echo "Something went wrong.";
+                            echo "<CENTER><h6 style='color: black;'>Iets is mis gegaan.<h6></CENTER>";
                         }
 
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

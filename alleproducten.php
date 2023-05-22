@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Products</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Overzicht producten</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <?php
         include "navigation.php";
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     ?>
-    <h1>View Products</h1>
-    <table border="1">
+    <br>
+    <CENTER><h1 style="color: black;">Overzicht producten</h1>
+    <div style="width: 1000px;" class="table-responsive mt-4">
+        <table class="table table-striped">
         <tr>
             <th>ID</th>
             <th>Naam</th>
@@ -20,6 +22,8 @@
             <th>Voorraad</th>
             <th>EAN Nummer</th>
         </tr>
+        </div>
+        </CENTER>
         <?php
         include 'config.php';
 
@@ -31,16 +35,17 @@
 
             foreach ($products as $product) {
                 echo "<tr>";
-                echo "<td>" . htmlspecialchars($product['id']) . "</td>";
-                echo "<td>" . htmlspecialchars($product['naam']) . "</td>";
-                echo "<td>" . htmlspecialchars($product['beschrijving']) . "</td>";
-                echo "<td>" . htmlspecialchars($product['voorraad']) . "</td>";
-                echo "<td>" . htmlspecialchars($product['EAN-Nummer']) . "</td>";
+                echo "<td>" . $product['id'] . "</td>";
+                echo "<td>" . $product['naam'] . "</td>";
+                echo "<td>" . $product['beschrijving'] . "</td>";
+                echo "<td>" . $product['voorraad'] . "</td>";
+                echo "<td>" . $product['EAN-Nummer'] . "</td>";
                 echo "</tr>";
             }
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
         }
+    ?>
         ?>
     </table>
 </body>

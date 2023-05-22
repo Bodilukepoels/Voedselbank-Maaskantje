@@ -1,31 +1,39 @@
 <?php
 include "navigation.php";
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-        // User is logged in
-        include "config.php";
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    // User is logged in
+    include "config.php";
 
-        // Check if the form was submitted for adding a new product
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $naam = $_POST['naam'];
-            $beschrijving = $_POST['beschrijving'];
-            $voorraad = $_POST['voorraad'];
-            $eanNummer = $_POST['eanNummer'];
+    // Check if the form was submitted for adding a new product
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $naam = $_POST['naam'];
+        $beschrijving = $_POST['beschrijving'];
+        $voorraad = $_POST['voorraad'];
+        $eanNummer = $_POST['eanNummer'];
 
-            try {
-                $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer]);
-                $successMessage = "Het product is succesvol toegevoegd.";
-            } catch (PDOException $e) {
-                $errorMessage = "Iets is misgegaan: " . $e->getMessage();
-            }
+        try {
+            $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer]);
+            $successMessage = "Het product is succesvol toegevoegd.";
+        } catch (PDOException $e) {
+            $errorMessage = "Iets is misgegaan: " . $e->getMessage();
         }
-    } else {
-        // User is not logged in, redirect to login page
-        header("Location: index.php");
-        exit();
     }
+
+    // Check if a product was deleted
+    if (isset($_GET['success']) && $_GET['success'] == 1) {
+        $deleteSuccessMessage = "Het product is succesvol verwijderd.";
+    } elseif (isset($_GET['success']) && $_GET['success'] != 1) {
+        $deleteErrorMessage = "Iets is misgegaan bij het verwijderen van het product.";
+    }
+} else {
+    // User is not logged in, redirect to login page
+    header("Location: index.php");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +56,13 @@ include "navigation.php";
                 <?php endif; ?>
                 <?php if (isset($successMessage)): ?>
                     <div class="alert alert-success"><?php echo $successMessage; ?></div>
+                <?php endif; ?>
+
+                <?php if (isset($deleteSuccessMessage)): ?>
+                    <div class="alert alert-success mt-4"><?php echo $deleteSuccessMessage; ?></div>
+                <?php endif; ?>
+                <?php if (isset($deleteErrorMessage)): ?>
+                    <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
                 <?php endif; ?>
                 <form action="productentoevoegen.php" method="POST">
                     <div class="form-group">
@@ -132,6 +147,7 @@ include "navigation.php";
             </table>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 </body>

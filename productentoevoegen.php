@@ -8,6 +8,11 @@
     <title>Product Management</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    label {
+        color: black;
+    }
+    </style>
 <body class="bg-light">
     <?php
         include "navigation.php";
@@ -21,19 +26,19 @@
                 <form action="productentoevoegen.php" method="POST">
                     <div class="form-group">
                         <label>Product Naam:</label>
-                        <input type="text" class="form-control" id="naam" name="naam" placeholder="Product Naam" required>
+                        <input type="text" class="form-control" id="naam" name="naam"  required>
                     </div>
                     <div class="form-group">
                         <label>Beschrijving:</label>
-                        <input type="text" class="form-control" id="beschrijving" name="beschrijving" placeholder="Beschrijving" required>
+                        <input type="text" class="form-control" id="beschrijving" name="beschrijving"  required>
                     </div>
                     <div class="form-group">
                         <label for="voorraad">Voorraad:</label>
-                        <input type="number" class="form-control" id="voorraad" name="voorraad" placeholder="Hoeveelheid" required>
+                        <input type="number" class="form-control" id="voorraad" name="voorraad" required>
                     </div>
                     <div class="form-group">
                         <label>EAN Nummer:</label>
-                        <input type="text" class="form-control" id="eanNummer" name="eanNummer" placeholder="EAN Nummer" required>
+                        <input type="text" class="form-control" id="eanNummer" name="eanNummer" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Product toevoegen</button>
                 </form>

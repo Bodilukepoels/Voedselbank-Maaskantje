@@ -13,7 +13,7 @@
     ?>
     <br>
     <CENTER><h1 style="color: black;">Overzicht producten</h1>
-    <div style="width: 1000px;" class="table-responsive mt-4">
+    <div class="table-responsive mt-4">
         <table class="table table-striped">
         <tr>
             <th>ID</th>

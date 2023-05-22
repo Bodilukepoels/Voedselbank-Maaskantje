@@ -6,7 +6,7 @@
     <title>Overzicht producten</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <?php
         include "navigation.php";
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {

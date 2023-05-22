@@ -43,9 +43,10 @@ try {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Edit Product</h1>
+<CENTER> <h1>Edit Product</h1>
     <form action="edit_product.php" method="POST">
-        <div style="display: flex;">
+        
+        <div style="display: flex; width: 350px;">
 
         <div style="width: 120px;"><label for="naam">Naam:</label>
         <label for="beschrijving">Beschrijving:</label>
@@ -59,6 +60,7 @@ try {
         <input type="text" id="eanNummer" name="eanNummer" value="<?php echo $product['EAN-Nummer']; ?>" required><br>
         </div></div>
         <input type="submit" value="Update Product">
+</CENTER>
 
     </form>
 </body>

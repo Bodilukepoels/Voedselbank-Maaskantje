@@ -30,7 +30,26 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        h1, label {
+            color: black;
+            text-align: center;
+        }
+
+        .noacc {
+            color: black;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -39,13 +58,22 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <div class="container">
         <h1>Login</h1>
         <form action="login.php" method="post">
-            <label for="Email">Email:</label> <Br>
-            <input type="text" name="Email" id="Email" placeholder= "..." required><br><br>
-            <label for="Wachtwoord">Wachtwoord:</label> <Br>
-            <input type="password" name="Wachtwoord" id="Wachtwoord" placeholder="..." required><br><br>
-            <input style="width: 100px;" type="submit" id="login" value="Login"><br>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="text" class="form-control" name="Email" id="Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Wachtwoord">Wachtwoord:</label>
+                <input type="password" class="form-control" name="Wachtwoord" id="Wachtwoord" required>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" id="login" value="Login">
+            </div>
+
+            <h6 class="noacc">Geen account? <a href="register.php" id="link">Klik hier.</a></h6>
         </form>
-        <h2 class="noacc">Geen account? <a href="register.php" id="link">Klik hier.</a></h2>
     </div>
 </body>
 </html>

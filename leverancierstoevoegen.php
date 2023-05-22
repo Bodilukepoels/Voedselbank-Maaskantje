@@ -44,6 +44,7 @@
             $beschrijving = $_POST['beschrijving'];
             $Telefoonnummer = $_POST['Telefoonnummer'];
             $Mail = $_POST['Mail'];
+            $postcode = $_POST['postcode']; // Define this variable
 
             try {
                 $sql = "INSERT INTO leveranciers (naam, beschrijving, Telefoonnummer, `Mail`, postcode) VALUES (?, ?, ?, ?, ?)";
@@ -53,6 +54,7 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
 
         try {
             $sql = "SELECT * FROM leveranciers";

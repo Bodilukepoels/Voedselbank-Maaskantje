@@ -9,6 +9,7 @@
 <body>
     <?php
         include "navigation.php";
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     ?>
     <h1>View Products</h1>
     <table border="1">
@@ -44,4 +45,10 @@
     </table>
 </body>
 </html>
+  <?php
+  }
+  else {
+    header("Location: index.php");
+  }
+  ?>
     

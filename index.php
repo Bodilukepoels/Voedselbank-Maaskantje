@@ -17,7 +17,7 @@
     else{
         // dit wordt ge-echo'd wanneer  account niet is ingelogt
         echo "<div class='container'>
-        <h2>Hallo mederwerker!</h2>
+        <h2>Hallo medewerker!</h2>
         <a href='login.php'><h1>Login</h1></a>
     </div>";
     }

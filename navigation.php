@@ -27,9 +27,9 @@
     <center>
       <div>
         <nav class="nav_bar">
-          <div onclick="location.href='index.php';"><a href="index.php">Home</a></div>
-          <div onclick="location.href='alleproducten.php';"><a href="alleproducten.php">Producten</a></div>
-          <div onclick="location.href='productentoevoegen.php';"><a href="productentoevoegen.php">Producten Toevoegen</a></div>
+          <div onclick="location.href='index.php';">Home</a></div>
+          <div onclick="location.href='alleproducten.php';">Producten</a></div>
+          <div onclick="location.href='productentoevoegen.php';">Producten Toevoegen</a></div>
           
         <?php
         if ($row['role'] == "directie") {

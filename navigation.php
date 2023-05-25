@@ -12,7 +12,6 @@
   ini_set('display_errors', 1);
 //HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
-
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
   ?>
   <section>
@@ -24,7 +23,7 @@
           <div onclick="location.href='productentoevoegen.php';">Producten Toevoegen</a></div>
           
         <?php
-        if ($row['Role'] == 1) {
+        if ($row['role'] == "directie") {
             echo '<div onclick="location.href=\'leveranciers.php\';"><a href="leveranciers.php">Leveranciers</a></div>';
         }
         ?>

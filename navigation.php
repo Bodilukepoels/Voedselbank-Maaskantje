@@ -9,7 +9,7 @@
   include "config.php";
 
 //HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
-  ini_set('display_errors', 0);
+  ini_set('display_errors', 1);
 //HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
   $naam = $_SESSION['user_name'];

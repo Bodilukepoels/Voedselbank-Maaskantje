@@ -12,14 +12,6 @@
   ini_set('display_errors', 1);
 //HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
-  $naam = $_SESSION['user_name'];
-
-  $query = "SELECT role FROM user WHERE Naam = '$naam'";
-  $stmt = $conn->query($query);
-  
-  if ($stmt && $stmt->rowCount() > 0) {
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
 
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
   ?>
@@ -32,7 +24,7 @@
           <div onclick="location.href='productentoevoegen.php';">Producten Toevoegen</a></div>
           
         <?php
-        if ($row['role'] == "directie") {
+        if ($row['Role'] == 1) {
             echo '<div onclick="location.href=\'leveranciers.php\';"><a href="leveranciers.php">Leveranciers</a></div>';
         }
         ?>

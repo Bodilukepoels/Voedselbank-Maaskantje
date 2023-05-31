@@ -7,15 +7,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     // Check if the form was submitted for adding a new leverancier
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $naam = $_POST['naam'];
-        $beschrijving = $_POST['beschrijving'];
-        $Telefoonnummer = $_POST['Telefoonnummer'];
         $Mail = $_POST['Mail'];
-        $postcode = $_POST['postcode'];
+        $Telefoonnummer = $_POST['Telefoonnummer'];
+        $Postcode = $_POST['Postcode'];
+        $bezorgingsdatum = $_POST['bezorgingsdatum'];
 
         try {
-            $sql = "INSERT INTO leveranciers (naam, beschrijving, Telefoonnummer, `Mail`, postcode) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO leveranciers (naam, `Mail`, Telefoonnummer, postcode, bezorgingsdatum) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$naam, $beschrijving, $Telefoonnummer, $Mail, $postcode]);
+            $stmt->execute([$naam, $beschrijving, $mail, $telefoonnummer, $postcode, $bezorgingsdatum]);
             $successMessage = "De leverancier is succesvol toegevoegd.";
         } catch (PDOException $e) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
@@ -30,7 +30,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     }
 } else {
     // User is not logged in, redirect to login page
-    header("Location: index.php");
+    header("Location: leverancierstoevoegen.php");
     exit();
 }
 ?>
@@ -65,14 +65,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 <?php if (isset($deleteErrorMessage)): ?>
                     <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
                 <?php endif; ?>
-                <form action="leveranciers.php" method="POST">
+                <form action="" method="POST">
                     <div class="form-group">
                         <label>Naam:</label>
                         <input type="text" class="form-control" id="naam" name="naam" required>
                     </div>
                     <div class="form-group">
                         <label>Beschrijving:</label>
-                        <input type="text" class="form-control" id="beschrijving" name="beschrijving" required>
+                        <input type="text" class="form-control" id="Mail" name="Mail" required>
                     </div>
                     <div class="form-group">
                         <label>Telefoonnummer:</label>
@@ -80,7 +80,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     </div>
                     <div class="form-group">
                         <label>Mail:</label>
-                        <input type="text" class="form-control" id="Mail" name="Mail" required>
+                        <input type="text" class="form-control" id="bezorgingsdatum" name="bezorgingsdatum" required>
                     </div>
                     <div class="form-group">
                         <label>Postcode:</label>
@@ -98,11 +98,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     <tr>
                         <th>ID</th>
                         <th>Naam</th>
-                        <th>Beschrijving</th>
                         <th>Telefoonnummer</th>
                         <th>Mail</th>
                         <th>Postcode</th>
-                        <th>bezorgingsdatum</th>
+                        <th>Bezorgingsdatum</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,10 +116,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<tr>";
                                 echo "<td>" . $leverancier['id'] . "</td>";
                                 echo "<td>" . $leverancier['naam'] . "</td>";
-                                echo "<td>" . $leverancier['beschrijving'] . "</td>";
-                                echo "<td>" . $leverancier['Telefoonnummer'] . "</td>";
                                 echo "<td>" . $leverancier['Mail'] . "</td>";
-                                echo "<td>" . $leverancier['postcode'] . "</td>";
+                                echo "<td>" . $leverancier['Telefoonnummer'] . "</td>";
+                                echo "<td>" . $leverancier['Postcode'] . "</td>";
+                                echo "<td>" . $leverancier['Bezorgingsdatum'] . "</td>";
                                 echo "<td>
                                     <a href='edit_leverancier.php?id=" . $leverancier['id'] . "' class='btn btn-primary btn-sm'>Bewerk</a>
                                     <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $leverancier['id'] . "'>Verwijder</button>

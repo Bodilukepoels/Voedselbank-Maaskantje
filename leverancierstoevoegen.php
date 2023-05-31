@@ -9,6 +9,7 @@
     <style>
         body {
             padding: 20px;
+            color: black;
         }
 
         .container {

@@ -32,6 +32,7 @@
                             <th>Naam</th>
                             <th>E-mail</th>
                             <th>Telefoonnummer</th>
+                            <th>postcode</th>
                             <th>Bezorgingsdatum</th>
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@
                                 echo "<td>" . $leverancier['naam'] . "</td>";
                                 echo "<td>" . $leverancier['mail'] . "</td>";
                                 echo "<td>" . $leverancier['telefoonnummer'] . "</td>";
+                                echo "<td>" . $leverancier['postcode'] . "</td>";
                                 echo "<td>" . $leverancier['bezorgingsdatum'] . "</td>";
                                 echo "</tr>";
                             }

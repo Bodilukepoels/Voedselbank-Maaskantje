@@ -1,41 +1,29 @@
-
-<!-- HTML form for the search bar -->
-<form method="POST">
-    <input type="text" name="search" placeholder="Search by EAN number or product name">
-    <button type="submit">Search</button>
-</form>
 <?php
-require_once 'config.php';
+include "config.php";
 
-// Your database connection code here
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Check if a search query is submitted
-if (isset($_POST['search'])) {
-    $searchTerm = $_POST['search'];
-
-    // Prepare the SQL statement to search for the product by EAN number or name
-    $sql = "SELECT * FROM producten WHERE `EAN-Nummer` = :searchTerm OR `naam` LIKE :searchTermLike";
+try {
+    $sql = "SELECT * FROM producten WHERE naam LIKE ? ORDER BY naam";
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':searchTerm', $searchTerm);
-    $stmt->bindValue(':searchTermLike', "%$searchTerm%");
+    $stmt->execute([$searchQuery . '%']);
+    $products = $stmt->fetchAll();
+} catch (PDOException $e) {
+    echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
+    exit();
+}
 
-    // Execute the query
-    $stmt->execute();
+if (count($products) > 0) {
+    echo "<ul class='list-group'>";
 
-    // Fetch the result
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        // Product found, display the product information
-        foreach ($result as $row) {
-            echo "Product Naam: " . $row['naam'] . "<br>";
-            echo "Product Beschrijving: " . $row['beschrijving'] . "<br>";
-            echo "Product EAN: " . $row['EAN-Nummer'] . "<br>";
-            echo "<hr>";
-        }
-    } else {
-        // Product not found
-        echo "Product not found.";
+    foreach ($products as $product) {
+        echo "<li class='list-group-item'>
+                <a href='#product-{$product['id']}' class='product-link'>{$product['naam']}</a>
+            </li>";
     }
+
+    echo "</ul>";
+} else {
+    echo "<div class='alert alert-info'>Geen producten gevonden.</div>";
 }
 ?>

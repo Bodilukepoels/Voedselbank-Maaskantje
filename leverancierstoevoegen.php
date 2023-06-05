@@ -9,13 +9,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $naam = $_POST['naam'];
         $Mail = $_POST['Mail'];
         $Telefoonnummer = $_POST['Telefoonnummer'];
-        $Postcode = $_POST['Postcode'];
+        $Postcode = $_POST['postcode'];
         $bezorgingsdatum = $_POST['bezorgingsdatum'];
-
+        
         try {
             $sql = "INSERT INTO leveranciers (naam, `Mail`, Telefoonnummer, postcode, bezorgingsdatum) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$naam, $beschrijving, $mail, $telefoonnummer, $postcode, $bezorgingsdatum]);
+            $stmt->execute([$naam, $Mail, $Telefoonnummer, $Postcode, $bezorgingsdatum]);
             $successMessage = "De leverancier is succesvol toegevoegd.";
         } catch (PDOException $e) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
@@ -71,20 +71,20 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <input type="text" class="form-control" id="naam" name="naam" required>
                     </div>
                     <div class="form-group">
-                        <label>Beschrijving:</label>
-                        <input type="text" class="form-control" id="Mail" name="Mail" required>
+                        <label>Mail:</label>
+                        <input type="mail" class="form-control" id="Mail" name="Mail" required>
                     </div>
                     <div class="form-group">
                         <label>Telefoonnummer:</label>
                         <input type="text" class="form-control" id="Telefoonnummer" name="Telefoonnummer" required>
                     </div>
                     <div class="form-group">
-                        <label>Mail:</label>
-                        <input type="text" class="form-control" id="bezorgingsdatum" name="bezorgingsdatum" required>
+                        <label>Postcode:</label>
+                        <input type="text" class="form-control" id="Postcode" name="postcode" required>
                     </div>
                     <div class="form-group">
-                        <label>Postcode:</label>
-                        <input type="text" class="form-control" id="postcode" name="postcode" required>
+                        <label>Bezorgingsdatum:</label>
+                        <input type="date" class="form-control" id="bezorgingsdatum" name="bezorgingsdatum" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Leverancier toevoegen</button>
                 </form>

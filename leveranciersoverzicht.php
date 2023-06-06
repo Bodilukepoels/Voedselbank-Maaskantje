@@ -34,6 +34,7 @@
                             <th>Telefoonnummer</th>
                             <th>postcode</th>
                             <th>Bezorgingsdatum</th>
+                            <th>Bezorgingstijd</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,7 @@
                                 echo "<td>" . $leverancier['telefoonnummer'] . "</td>";
                                 echo "<td>" . $leverancier['postcode'] . "</td>";
                                 echo "<td>" . $leverancier['bezorgingsdatum'] . "</td>";
+                                echo "<td>" . $leverancier['bezorgingstijd'] . "</td>";
                                 echo "</tr>";
                             }
                         } catch (PDOException $e) {

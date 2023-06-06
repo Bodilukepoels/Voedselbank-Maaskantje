@@ -102,6 +102,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <th>Mail</th>
                         <th>Postcode</th>
                         <th>Bezorgingsdatum</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

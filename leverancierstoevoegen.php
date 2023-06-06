@@ -11,11 +11,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $Telefoonnummer = $_POST['Telefoonnummer'];
         $Postcode = $_POST['postcode'];
         $bezorgingsdatum = $_POST['bezorgingsdatum'];
+        $bezorgingstijd = $_POST['bezorgingstijd'];
         
         try {
-            $sql = "INSERT INTO leveranciers (naam, `Mail`, Telefoonnummer, postcode, bezorgingsdatum) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO leveranciers (naam, `Mail`, Telefoonnummer, postcode, bezorgingsdatum, bezorgingstijd) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$naam, $Mail, $Telefoonnummer, $Postcode, $bezorgingsdatum]);
+            $stmt->execute([$naam, $Mail, $Telefoonnummer, $Postcode, $bezorgingsdatum, $bezorgingstijd]);
             $successMessage = "De leverancier is succesvol toegevoegd.";
         } catch (PDOException $e) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
@@ -86,6 +87,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <label>Bezorgingsdatum:</label>
                         <input type="date" class="form-control" id="bezorgingsdatum" name="bezorgingsdatum" required>
                     </div>
+                    <div class="form-group">
+                        <label>Bezorgingstijd:</label>
+                        <input type="time" class="form-control" id="bezorgingstijd" name="bezorgingstijd" required>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Leverancier toevoegen</button>
                 </form>
             </div>
@@ -102,6 +107,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <th>Mail</th>
                         <th>Postcode</th>
                         <th>Bezorgingsdatum</th>
+                        <th>Bezorgingstijd</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -121,6 +127,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $leverancier['Telefoonnummer'] . "</td>";
                                 echo "<td>" . $leverancier['Postcode'] . "</td>";
                                 echo "<td>" . $leverancier['Bezorgingsdatum'] . "</td>";
+                                echo "<td>" . $leverancier['Bezorgingstijd'] . "</td>";
                                 echo "<td>
                                     <a href='edit_leverancier.php?id=" . $leverancier['id'] . "' class='btn btn-primary btn-sm'>Bewerk</a>
                                     <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $leverancier['id'] . "'>Verwijder</button>

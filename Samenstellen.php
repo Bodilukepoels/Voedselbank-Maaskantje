@@ -27,12 +27,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $stmt->bindParam(':ophaaldatum', $pickupDate);
             $stmt->execute();
     
-            echo "<div class='alert alert-success'>Selected products inserted into the database.</div>";
+            echo "<div class='alert alert-success'>Producten geplaatst in de database.</div>";
         } catch (PDOException $e) {
-            echo "<div class='alert alert-danger'>Error inserting selected products: " . $e->getMessage() . "</div>";
+            echo "<div class='alert alert-danger'>Error producten toevoegen:  " . $e->getMessage() . "</div>";
         }
     } else {
-        echo "<div class='alert alert-danger'>No products selected.</div>";
+        echo "<div class='alert alert-danger'>Geen producten geselecteerd.</div>";
     }
     
 

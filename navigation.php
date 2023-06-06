@@ -20,7 +20,12 @@
         <nav class="nav_bar">
           <div onclick="location.href='index.php';">Home</a></div>
           <div onclick="location.href='alleproducten.php';">Producten</a></div>
+          <div class="dropdown">
           <div onclick="location.href='productentoevoegen.php';">Producten Toevoegen</a></div>
+          <div class="dropdown-content">
+            <a href="leverancierstoevoegen.php">leveranciers</a>
+          </div>
+          </div>
           
         <?php
         if ($row['role'] == "directie") {

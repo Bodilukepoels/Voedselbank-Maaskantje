@@ -7,19 +7,19 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
             $selectedProducts = $_POST['selectedProducts'];
 
-            echo "<div class='alert alert-success'>Selected Products:</div>";
-            echo "<ul>";
-            foreach ($selectedProducts as $productId => $quantity) {
+            try {
+                $stmt = $conn->prepare("INSERT INTO voedselpakket (product_id, quantity) VALUES (:product_id, :quantity)");
 
-                $productDetails = [
-                    'id' => $productId,
-                    'naam' => "Product {$productId}",
-                    'voorraad' => 100
-                ];
+                foreach ($selectedProducts as $productId => $quantity) {
+                    $stmt->bindParam(':product_id', $productId);
+                    $stmt->bindParam(':quantity', $quantity);
+                    $stmt->execute();
+                }
 
-                echo "<li>{$productDetails['naam']} (Quantity: {$quantity})</li>";
+                echo "<div class='alert alert-success'>Selected products inserted into the database.</div>";
+            } catch (PDOException $e) {
+                echo "<div class='alert alert-danger'>Error inserting selected products: " . $e->getMessage() . "</div>";
             }
-            echo "</ul>";
         } else {
             echo "<div class='alert alert-danger'>No products selected.</div>";
         }
@@ -173,7 +173,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 delete selectedProducts[productId];
                 updateSelectedProductsList();
             });
-
         });
     </script>
 </body>

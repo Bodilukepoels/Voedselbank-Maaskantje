@@ -1,5 +1,6 @@
 <?php
 include "navigation.php";
+if ($row && $row['role'] == "3") {
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     include "config.php";
 
@@ -168,3 +169,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php
+} else {
+    header("location:index.php");
+}

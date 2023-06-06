@@ -26,7 +26,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 $availableQuantity = $product['voorraad'];
 
                 if ($requestedQuantity <= $availableQuantity) {
-                    $foodPackage[$product['naam']] = $requestedQuantity;
+                    $foodPackage[] = $product['naam'] . ' x' . $requestedQuantity;
                 } else {
                     echo "<div class='alert alert-danger'>Requested quantity for '{$product['naam']}' exceeds the available stock.</div>";
                 }
@@ -35,7 +35,24 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             if (!empty($foodPackage)) {
                 unset($_POST['quantities']);
 
-                echo "<div class='alert alert-success'>Food package created successfully!</div>";
+                // Insert food package into the database
+                $numberOfPackages = $_POST['numberOfPackages'];
+                $pickupDate = $_POST['pickupDate'];
+
+                try {
+                    $stmt = $conn->prepare("INSERT INTO voedselpakket (producten, hoeveelheid, datum) VALUES (:producten, :hoeveelheid, :datum)");
+
+                    for ($i = 0; $i < $numberOfPackages; $i++) {
+                        $stmt->bindParam(':producten', implode(", ", $foodPackage));
+                        $stmt->bindParam(':hoeveelheid', $requestedQuantity);
+                        $stmt->bindParam(':datum', $pickupDate);
+                        $stmt->execute();
+                    }
+
+                    echo "<div class='alert alert-success'>Food package created successfully!</div>";
+                } catch (PDOException $e) {
+                    echo "<div class='alert alert-danger'>Error inserting food package into the database: " . $e->getMessage() . "</div>";
+                }
             }
         } else {
             echo "<div class='alert alert-danger'>No quantities submitted.</div>";

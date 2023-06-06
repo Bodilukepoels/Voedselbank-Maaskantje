@@ -3,27 +3,38 @@ include "navigation.php";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     include "config.php";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
-            $selectedProducts = $_POST['selectedProducts'];
-
-            try {
-                $stmt = $conn->prepare("INSERT INTO voedselpakket (product_id, quantity) VALUES (:product_id, :quantity)");
-
-                foreach ($selectedProducts as $productId => $quantity) {
-                    $stmt->bindParam(':product_id', $productId);
-                    $stmt->bindParam(':quantity', $quantity);
-                    $stmt->execute();
-                }
-
-                echo "<div class='alert alert-success'>Selected products inserted into the database.</div>";
-            } catch (PDOException $e) {
-                echo "<div class='alert alert-danger'>Error inserting selected products: " . $e->getMessage() . "</div>";
+    if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
+        $selectedProducts = $_POST['selectedProducts'];
+        $foodPackageName = $_POST['foodPackageName'];
+        $numberOfPackages = $_POST['numberOfPackages'];
+        $pickupDate = $_POST['pickupDate'];
+    
+        try {
+            $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, aantal_pakketten, ophaaldatum) VALUES (:naam, :producten, :aantal_pakketten, :ophaaldatum)");
+    
+            // Prepare the product string (e.g., 'appel x1, tomaat x2')
+            $productString = '';
+            foreach ($selectedProducts as $productId => $quantity) {
+                $product = $products[array_search($productId, array_column($products, 'id'))];
+                $productName = $product['naam'];
+                $productString .= $productName . ' x' . $quantity . ', ';
             }
-        } else {
-            echo "<div class='alert alert-danger'>No products selected.</div>";
+            $productString = rtrim($productString, ', '); // Remove the trailing comma and space
+    
+            $stmt->bindParam(':naam', $foodPackageName);
+            $stmt->bindParam(':producten', $productString);
+            $stmt->bindParam(':aantal_pakketten', $numberOfPackages);
+            $stmt->bindParam(':ophaaldatum', $pickupDate);
+            $stmt->execute();
+    
+            echo "<div class='alert alert-success'>Selected products inserted into the database.</div>";
+        } catch (PDOException $e) {
+            echo "<div class='alert alert-danger'>Error inserting selected products: " . $e->getMessage() . "</div>";
         }
+    } else {
+        echo "<div class='alert alert-danger'>No products selected.</div>";
     }
+    
 
     try {
         $sql = "SELECT * FROM producten ORDER BY naam";
@@ -37,6 +48,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 } else {
     header("Location: index.php");
     exit();
+}
+
+function getProductById($conn, $productId)
+{
+    $stmt = $conn->prepare("SELECT * FROM producten WHERE id = :id");
+    $stmt->bindParam(':id', $productId);
+    $stmt->execute();
+    return $stmt->fetch();
 }
 ?>
 
@@ -102,6 +121,18 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         <ul id="selected-products-list"></ul>
 
         <form method="POST" action="">
+            <div class="form-group">
+                <label for="foodPackageName">Naam van het voedselpakket:</label>
+                <input type="text" class="form-control" id="foodPackageName" name="foodPackageName" required>
+            </div>
+            <div class="form-group">
+                <label for="numberOfPackages">Aantal pakketten:</label>
+                <input type="number" class="form-control" id="numberOfPackages" name="numberOfPackages" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="pickupDate">Ophaaldatum:</label>
+                <input type="date" class="form-control" id="pickupDate" name="pickupDate" required>
+            </div>
             <input type="hidden" name="selectedProducts" id="selected-products-input">
             <button type="submit" class="btn btn-primary" id="create-package-btn">Creeer voedselpakket</button>
         </form>
@@ -157,7 +188,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     var product = products.find(p => p.id === parseInt(productId));
 
                     if (product) {
-                        var listItem = $('<li>').text(product.naam + ' - ' + quantity + ' stuks');
+                        var listItem = $('<li>').text(product.naam + ' x' + quantity);
 
                         var deleteButton = $('<button>').text('Verwijder').addClass('btn btn-danger btn-sm ml-2');
                         deleteButton.data('productId', productId);

@@ -19,11 +19,13 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
             header("Location: index.php");
             exit();
         }
-    }
-    echo "Incorrecte wachtwoord of email probeer opnieuw.";
+        else {
+            echo "<p style='color: black'>Incorrecte wachtwoord of email probeer opnieuw.";
+        }
+}
+
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

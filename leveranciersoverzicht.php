@@ -19,6 +19,7 @@
 
 <body>
     <?php
+    if ($row && $row['role'] == "3") {
  
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     ?>
@@ -67,8 +68,9 @@
             </div>
         </div>
     <?php
+    }
     } else {
-        header("Location: leverancierstoevoegen.php");
+        header("Location: index.php");
     }
     ?>
 </body>

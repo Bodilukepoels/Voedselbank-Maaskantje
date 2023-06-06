@@ -1,10 +1,8 @@
 <?php
 include "navigation.php";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-    // User is logged in
     include "config.php";
 
-    // Check if the form was submitted for adding a new leverancier
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $naam = $_POST['naam'];
         $Mail = $_POST['Mail'];
@@ -22,15 +20,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
         }
     }
-
-    // Check if a leverancier was deleted
     if (isset($_GET['success']) && $_GET['success'] == 1) {
         $deleteSuccessMessage = "De leverancier is succesvol verwijderd.";
-    } elseif (isset($_GET['success']) && $_GET['success'] != 1) {
+    } elseif (isset($_GET['success']) && $_GET['success'] == 2) {
         $deleteErrorMessage = "Iets is misgegaan bij het verwijderen van de leverancier.";
     }
+    if (isset($_GET['success']) && $_GET['success'] == 3) {
+        $editSuccessMessage = "De leverancier is succesvol bijgewerkt.";
+    }
 } else {
-    // User is not logged in, redirect to login page
     header("Location: leverancierstoevoegen.php");
     exit();
 }
@@ -59,13 +57,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 <?php if (isset($successMessage)): ?>
                     <div class="alert alert-success"><?php echo $successMessage; ?></div>
                 <?php endif; ?>
-
                 <?php if (isset($deleteSuccessMessage)): ?>
                     <div class="alert alert-success mt-4"><?php echo $deleteSuccessMessage; ?></div>
                 <?php endif; ?>
                 <?php if (isset($deleteErrorMessage)): ?>
                     <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
                 <?php endif; ?>
+                <?php if (isset($editSuccessMessage)): ?>
+                    <div class="alert alert-success"><?php echo $editSuccessMessage; ?></div>
+                <?php endif; ?>
+
                 <form action="" method="POST">
                     <div class="form-group">
                         <label>Naam:</label>
@@ -103,8 +104,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     <tr>
                         <th>ID</th>
                         <th>Naam</th>
-                        <th>Telefoonnummer</th>
                         <th>Mail</th>
+                        <th>Telefoonnummer</th>
                         <th>Postcode</th>
                         <th>Bezorgingsdatum</th>
                         <th>Bezorgingstijd</th>
@@ -123,11 +124,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<tr>";
                                 echo "<td>" . $leverancier['id'] . "</td>";
                                 echo "<td>" . $leverancier['naam'] . "</td>";
-                                echo "<td>" . $leverancier['Mail'] . "</td>";
-                                echo "<td>" . $leverancier['Telefoonnummer'] . "</td>";
-                                echo "<td>" . $leverancier['Postcode'] . "</td>";
-                                echo "<td>" . $leverancier['Bezorgingsdatum'] . "</td>";
-                                echo "<td>" . $leverancier['Bezorgingstijd'] . "</td>";
+                                echo "<td>" . $leverancier['mail'] . "</td>";
+                                echo "<td>" . $leverancier['telefoonnummer'] . "</td>";
+                                echo "<td>" . $leverancier['postcode'] . "</td>";
+                                echo "<td>" . $leverancier['bezorgingsdatum'] . "</td>";
+                                echo "<td>" . substr($leverancier['bezorgingstijd'], 0, 5) . "</td>";
+
                                 echo "<td>
                                     <a href='edit_leverancier.php?id=" . $leverancier['id'] . "' class='btn btn-primary btn-sm'>Bewerk</a>
                                     <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $leverancier['id'] . "'>Verwijder</button>

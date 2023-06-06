@@ -2,18 +2,20 @@
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
     $Naam = $_POST['Naam'];
-        $Mail = $_POST['Mail'];
-        $Telefoonnummer = $_POST['Telefoonnummer'];
-        $Postcode = $_POST['postcode'];
-        $bezorgingsdatum = $_POST['bezorgingsdatum'];
-        $bezorgingstijd = $_POST['bezorgingstijd'];
+    $Mail = $_POST['Mail'];
+    $Telefoonnummer = $_POST['Telefoonnummer'];
+    $Postcode = $_POST['Postcode'];
+    $bezorgingsdatum = $_POST['bezorgingsdatum'];
+    $bezorgingstijd = $_POST['bezorgingstijd'];
 
     try {
-        $sql = "UPDATE leveranciers SET Naam = ?, Mail = ?, Telefoonnummer = ?, postcode = ?, bezorgingsdatum = ?, bezorgingstijd = ? WHERE id = ?";
+        $sql = "UPDATE leveranciers SET naam = ?, Mail = ?, Telefoonnummer = ?, Postcode = ?, bezorgingsdatum = ?, bezorgingstijd = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$Naam, $Mail, $Telefoonnummer, $Postcode, $bezorgingsdatum, $bezorgingstijd, $id]);
-        header("Location: leverancierstoevoegen.php?success=1");
+        header("Location: leverancierstoevoegen.php?success=3");
+        exit;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -68,7 +70,9 @@ try {
         }
 
         .form-group input[type="text"],
-        .form-group input[type="number"] {
+        .form-group input[type="number"],
+        .form-group input[type="time"],
+        .form-group input[type="date"] {
             flex: 1;
             margin-left: 15px;
         }
@@ -77,31 +81,31 @@ try {
             margin: 0 auto;
             display: block;
         }
+        
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Edit leveranciers</h1>
-        <form action="edit_leveranciers.php" method="POST">
+        <form action="" method="POST">
             <div class="form-group">
                 <label for="Naam">Naam:</label>
-                <input type="hidden" name="id" value="<?php echo $leveranciers['Naam']; ?>">
-                <input type="text" class="form-control" id="Naam" name="Naam" value="<?php echo $leveranciers['Naam']; ?>" required>
+                <input type="text" class="form-control" id="Naam" name="Naam" value="<?php echo $leveranciers['naam']; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="Mail">Mail:</label>
-                <input type="text" class="form-control" id="Mail" name="Mail" value="<?php echo $leveranciers['Mail']; ?>" required>
+                <input type="text" class="form-control" id="Mail" name="Mail" value="<?php echo $leveranciers['mail']; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="Telefoonnummer">Telefoonnummer:</label>
-                <input type="number" class="form-control" id="Telefoonnummer" name="Telefoonnummer" value="<?php echo $leveranciers['Telefoonnummer']; ?>" required>
+                <input type="number" class="form-control" id="Telefoonnummer" name="Telefoonnummer" value="<?php echo $leveranciers['telefoonnummer']; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="Postcode">Postcode:</label>
-                <input type="text" class="form-control" id="Postcode" name="Postcode" value="<?php echo $leveranciers['Postcode']; ?>" required>
+                <input type="text" class="form-control" id="Postcode" name="Postcode" value="<?php echo $leveranciers['postcode']; ?>" required>
             </div>
 
             <div class="form-group">
@@ -110,9 +114,10 @@ try {
             </div>
 
             <div class="form-group">
-                <label for="bezorgingstijd">Bezorgingstijd:</label>
-                <input type="time" class="form-control" id="bezorgingstijd" name="bezorgingstijd" value="<?php echo $leveranciers['bezorgingstijd']; ?>" required>
+            <label for="bezorgingstijd">Bezorgingstijd:</label>
+            <input type="time" class="form-control" id="bezorgingstijd" name="bezorgingstijd" value="<?php echo date('H:i', strtotime($leveranciers['bezorgingstijd'])); ?>" required>
             </div>
+
 
             <input type="submit" class="btn btn-primary" value="Update Leveranciers">
         </form>

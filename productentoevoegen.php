@@ -1,10 +1,8 @@
 <?php
 include "navigation.php";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-    // User is logged in
     include "config.php";
 
-    // Check if the form was submitted for adding a new product
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $naam = $_POST['naam'];
         $beschrijving = $_POST['beschrijving'];
@@ -21,14 +19,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         }
     }
 
-    // Check if a product was deleted
     if (isset($_GET['success']) && $_GET['success'] == 1) {
         $deleteSuccessMessage = "Het product is succesvol verwijderd.";
-    } elseif (isset($_GET['success']) && $_GET['success'] != 1) {
+    } elseif (isset($_GET['success']) && $_GET['success'] == 2) {
         $deleteErrorMessage = "Iets is misgegaan bij het verwijderen van het product.";
     }
+    if (isset($_GET['success']) && $_GET['success'] == 3) {
+        $editSuccessMessage = "Het product is succesvol bijgewerkt.";
+    }
 } else {
-    // User is not logged in, redirect to login page
     header("Location: index.php");
     exit();
 }
@@ -64,6 +63,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 <?php if (isset($deleteErrorMessage)): ?>
                     <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
                 <?php endif; ?>
+                <?php if (isset($editSuccessMessage)): ?>
+                    <div class="alert alert-success"><?php echo $editSuccessMessage; ?></div>
+                <?php endif; ?>
+
                 <form action="productentoevoegen.php" method="POST">
                     <div class="form-group">
                         <label>Product Naam:</label>

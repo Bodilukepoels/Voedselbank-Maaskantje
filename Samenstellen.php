@@ -1,52 +1,51 @@
 <?php
+include "config.php";
 include "navigation.php";
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-    include "config.php";
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header("Location: index.php");
+    exit();
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
-        $selectedProducts = $_POST['selectedProducts'];
+        $selectedProducts = json_decode($_POST['selectedProducts'], true); // Decode the JSON string into an array
         $foodPackageName = $_POST['foodPackageName'];
         $numberOfPackages = $_POST['numberOfPackages'];
         $pickupDate = $_POST['pickupDate'];
-    
+
         try {
             $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, aantal_pakketten, ophaaldatum) VALUES (:naam, :producten, :aantal_pakketten, :ophaaldatum)");
-    
-            // Prepare the product string (e.g., 'appel x1, tomaat x2')
+
             $productString = '';
             foreach ($selectedProducts as $productId => $quantity) {
-                $product = $products[array_search($productId, array_column($products, 'id'))];
+                $product = getProductById($conn, $productId);
                 $productName = $product['naam'];
                 $productString .= $productName . ' x' . $quantity . ', ';
             }
-            $productString = rtrim($productString, ', '); // Remove the trailing comma and space
-    
+            $productString = rtrim($productString, ', ');
+
             $stmt->bindParam(':naam', $foodPackageName);
             $stmt->bindParam(':producten', $productString);
             $stmt->bindParam(':aantal_pakketten', $numberOfPackages);
             $stmt->bindParam(':ophaaldatum', $pickupDate);
             $stmt->execute();
-    
-            echo "<div class='alert alert-success'>Producten geplaatst in de database.</div>";
+
+            $successMessage = "Producten geplaatst in de database.";
         } catch (PDOException $e) {
-            echo "<div class='alert alert-danger'>Error producten toevoegen:  " . $e->getMessage() . "</div>";
+            $errorMessage = "Error producten toevoegen: " . $e->getMessage();
         }
     } else {
-        echo "<div class='alert alert-danger'>Geen producten geselecteerd.</div>";
+        $errorMessage = "Geen producten geselecteerd.";
     }
-    
+}
 
-    try {
-        $sql = "SELECT * FROM producten ORDER BY naam";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $products = $stmt->fetchAll();
-    } catch (PDOException $e) {
-        echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
-        exit();
-    }
-} else {
-    header("Location: index.php");
+try {
+    $sql = "SELECT * FROM producten ORDER BY naam";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $products = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $errorMessage = $e->getMessage();
     exit();
 }
 
@@ -67,6 +66,66 @@ function getProductById($conn, $productId)
     <title>Voedselpakket samenstellen</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 600px;
+        }
+
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem !important;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .btn-primary {
+            background-color: #007bff !important;
+            border-color: #007bff !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9 !important;
+            border-color: #0062cc !important;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d !important;
+            border-color: #6c757d !important;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268 !important;
+            border-color: #545b62 !important;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+
         #product-popup {
             display: none;
             position: fixed;
@@ -85,9 +144,9 @@ function getProductById($conn, $productId)
     </style>
 </head>
 
-<body class="bg-light">
+<body>
     <div class="container mt-5">
-        <h1 style="color: black;" class="text-center mb-4">Voedselpakket samenstellen</h1>
+        <h1 class="text-center mb-4">Voedselpakket samenstellen</h1>
         <button class="btn btn-primary mb-3" id="open-popup-btn">Voeg product toe</button>
         <div id="product-popup">
             <h3>Producten</h3>
@@ -103,11 +162,11 @@ function getProductById($conn, $productId)
                     <tbody>
                         <?php foreach ($products as $product) : ?>
                             <tr>
-                                <td><?php echo $product['naam']; ?></td>
+                                <td><?= $product['naam']; ?></td>
                                 <td>
-                                    <input type="number" class="form-control product-quantity" name="quantities[<?php echo $product['id']; ?>]" min="0" max="<?php echo $product['voorraad']; ?>">
+                                    <input type="number" class="form-control product-quantity" name="quantities[<?= $product['id']; ?>]" min="0" max="<?= $product['voorraad']; ?>">
                                 </td>
-                                <td><?php echo $product['voorraad']; ?></td>
+                                <td><?= $product['voorraad']; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -116,6 +175,14 @@ function getProductById($conn, $productId)
             <button class="btn btn-primary" id="add-products-btn">Voeg toe aan geselecteerde</button>
             <button class="btn btn-secondary" id="close-popup-btn">Sluiten</button>
         </div>
+
+        <?php if (isset($successMessage)) : ?>
+            <div class="alert alert-success"><?= $successMessage ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($errorMessage)) : ?>
+            <div class="alert alert-danger"><?= $errorMessage ?></div>
+        <?php endif; ?>
 
         <h3>Geselecteerde producten</h3>
         <ul id="selected-products-list"></ul>
@@ -142,7 +209,6 @@ function getProductById($conn, $productId)
     <script>
         $(document).ready(function() {
             var selectedProducts = {};
-            var products = <?php echo json_encode($products); ?>;
 
             $('#open-popup-btn').click(function() {
                 $('#product-popup').show();
@@ -154,6 +220,7 @@ function getProductById($conn, $productId)
 
             $('#add-products-btn').click(function() {
                 var hasInvalidQuantity = false;
+                var selectedProducts = {};
 
                 $('.product-quantity').each(function() {
                     var productId = $(this).attr('name').match(/\d+/)[0];
@@ -162,47 +229,27 @@ function getProductById($conn, $productId)
 
                     if (quantity > maxQuantity) {
                         hasInvalidQuantity = true;
-                        return false; 
+                        return false;
                     }
 
                     if (quantity > 0) {
                         selectedProducts[productId] = quantity;
-                    } else {
-                        delete selectedProducts[productId];
                     }
                 });
 
                 if (hasInvalidQuantity) {
                     alert("Invalid quantity. Please enter a valid quantity.");
                 } else {
-                    updateSelectedProductsList();
+                    $('#selected-products-list').empty();
+
+                    $.each(selectedProducts, function(productId, quantity) {
+                        var productName = $('input[name="quantities[' + productId + ']"]').closest('tr').find('td:first').text();
+                        $('#selected-products-list').append('<li>' + productName + ' x' + quantity + '</li>');
+                    });
+
+                    $('#selected-products-input').val(JSON.stringify(selectedProducts));
                     $('#product-popup').hide();
                 }
-            });
-
-            function updateSelectedProductsList() {
-                var selectedProductsList = $('#selected-products-list');
-                selectedProductsList.empty();
-
-                $.each(selectedProducts, function(productId, quantity) {
-                    var product = products.find(p => p.id === parseInt(productId));
-
-                    if (product) {
-                        var listItem = $('<li>').text(product.naam + ' x' + quantity);
-
-                        var deleteButton = $('<button>').text('Verwijder').addClass('btn btn-danger btn-sm ml-2');
-                        deleteButton.data('productId', productId);
-
-                        listItem.append(deleteButton);
-                        selectedProductsList.append(listItem);
-                    }
-                });
-                $('#selected-products-input').val(JSON.stringify(selectedProducts));
-            }
-            $('#selected-products-list').on('click', '.btn-danger', function() {
-                var productId = $(this).data('productId');
-                delete selectedProducts[productId];
-                updateSelectedProductsList();
             });
         });
     </script>

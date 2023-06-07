@@ -14,7 +14,7 @@
 session_start();
 include "config.php";
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
 $query = "SELECT * FROM user WHERE naam = :user_name";
@@ -31,6 +31,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
       <nav class="nav_bar">
         <div onclick="location.href='index.php';">Home</div>
         <div onclick="location.href='alleproducten.php';">Producten</div>
+        <div onclick="location.href='samenstellen.php';">Pakket Samenstellen</div>
         <div class="dropdown">
           <div class="hover-button">Toevoegen</div>
           <div class="dropdown-content">

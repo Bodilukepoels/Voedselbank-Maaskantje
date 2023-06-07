@@ -32,6 +32,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,8 +109,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $gezin['kinderen'] . "</td>";
                                 echo "</tr>";
                                 echo "<td>
-
-                                <a href='edit_gezin.php?id=" . $gezin['id'] . "' class='btn btn-primary btn-sm'>Bewerk</a>
+                                
                                 <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $gezin['id'] . "'>Verwijder</button>
                                 </td>";
                             echo "</tr>";

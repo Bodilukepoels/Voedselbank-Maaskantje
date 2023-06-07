@@ -8,10 +8,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     exit();
 }
 
-// Retrieve the food package details from the database or any other data source
+// Retrieve the food package details from the database
 if (isset($_GET['package_id'])) {
     $packageId = $_GET['package_id'];
-    
+
     try {
         $stmt = $conn->prepare("SELECT * FROM voedselpakket WHERE id = :packageId");
         $stmt->bindParam(':packageId', $packageId);
@@ -99,22 +99,14 @@ if (isset($_GET['package_id'])) {
                     <p><strong>Naam van het voedselpakket:</strong> <?php echo $package['naam']; ?></p>
                     <p><strong>Aantal pakketten:</strong> <?php echo $package['aantal_pakketten']; ?></p>
                     <p><strong>Ophaaldatum:</strong> <?php echo $package['ophaaldatum']; ?></p>
-                    <h4>Geselecteerde producten:</h4>
-                    <?php $selectedProducts = json_decode($package['producten'], true); ?>
-                    <ul class="product-list">
-                        <?php foreach ($selectedProducts as $selectedProduct) : ?>
-                            <li class="product-item">
-                                <span class="product-name"><?php echo $selectedProduct['naam']; ?></span>
-                                <span class="product-quantity">x <?php echo $selectedProduct['aantal_pakketten']; ?></span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <p><strong>Geselecteerde producten:</strong> <?php echo $package['producten']; ?></p>
                 <?php else : ?>
                     <p class="error-message"><?php echo $errorMessage; ?></p>
                 <?php endif; ?>
             </div>
         </div>
-    </div>
+    </div><br>
+    <CENTER><img src="https://cdn.pixabay.com/photo/2012/04/24/16/17/box-40302_960_720.png" width="200px" style="cursor: pointer;">
 </body>
 
 </html>

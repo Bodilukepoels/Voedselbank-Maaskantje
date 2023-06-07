@@ -4,3 +4,10 @@
 	<h2>Welkom, <?php echo $_SESSION['user_name']; ?>!</h2>  
 	<a href="logout.php"><h1>Logout</h1></a>
 	</div>
+	<br><br>
+<a href="food_package_details.php">
+    <div style="text-align: center;">
+        <img src="https://cdn.pixabay.com/photo/2012/04/24/16/17/box-40302_960_720.png" width="200px" style="cursor: pointer;">
+        <p>Klik hier om de details van het voedselpakket te bekijken</p>
+    </div>
+</a>

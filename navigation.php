@@ -38,7 +38,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             <a href="productentoevoegen.php">Producten Toevoegen</a>
             <?php 
             if ($row && $row['role'] == "3") {
-              echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>"; 
+              echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
+              echo "<a href='overzichtklanten1.php'>Gezinnen Toevoegen</a>"; 
             } 
             ?>
           </div>

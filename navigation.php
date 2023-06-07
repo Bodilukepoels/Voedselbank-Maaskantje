@@ -14,7 +14,7 @@
 session_start();
 include "config.php";
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
 $query = "SELECT * FROM user WHERE naam = :user_name";

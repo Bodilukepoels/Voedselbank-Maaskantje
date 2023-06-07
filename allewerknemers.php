@@ -6,6 +6,7 @@
     <title>Overzicht werknemers</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <?php
         include "navigation.php";
@@ -50,4 +51,3 @@
     header("Location: index.php");
   }
   ?>
-    

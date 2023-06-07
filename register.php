@@ -36,6 +36,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="container">
         <h1>Registreer Account</h1>

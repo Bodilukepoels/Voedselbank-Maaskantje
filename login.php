@@ -29,6 +29,7 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,6 +56,7 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
         }
     </style>
 </head>
+
 <body>
     <?php
     include 'navigation.php';

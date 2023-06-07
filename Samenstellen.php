@@ -254,5 +254,4 @@ function getProductById($conn, $productId)
         });
     </script>
 </body>
-
 </html>

@@ -84,6 +84,7 @@ try {
         
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Edit leveranciers</h1>

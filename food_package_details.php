@@ -108,5 +108,4 @@ if (isset($_GET['package_id'])) {
     </div><br>
     <CENTER><img src="https://cdn.pixabay.com/photo/2012/04/24/16/17/box-40302_960_720.png" width="200px" style="cursor: pointer;">
 </body>
-
 </html>

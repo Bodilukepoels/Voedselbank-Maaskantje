@@ -78,7 +78,7 @@ if (isset($_POST['newPassword']) && isset($_POST['currentPassword'])) {
 </head>
 <body>
     <div class="container">
-        <h1>Welkom, <?php echo $user['Naam']; ?>!</h1>
+        <h1>Hallo, <?php echo $user['Naam']; ?>!</h1>
         <p>Rol: <?php echo $role; ?></p>
 
         <h3>Wijzig Wachtwoord</h3>

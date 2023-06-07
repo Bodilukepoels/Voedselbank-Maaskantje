@@ -34,18 +34,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
             if (!empty($foodPackage)) {
                 unset($_POST['quantities']);
-
-                // Insert food package into the database
                 $numberOfPackages = $_POST['numberOfPackages'];
                 $pickupDate = $_POST['pickupDate'];
 
                 try {
-                    $stmt = $conn->prepare("INSERT INTO voedselpakket (producten, hoeveelheid, datum) VALUES (:producten, :hoeveelheid, :datum)");
+                    $stmt = $conn->prepare("INSERT INTO voedselpakket (producten, aantal_pakketten, ophaaldatum) VALUES (:producten, :aantal_pakketten, :ophaaldatum)");
 
                     for ($i = 0; $i < $numberOfPackages; $i++) {
                         $stmt->bindParam(':producten', implode(", ", $foodPackage));
-                        $stmt->bindParam(':hoeveelheid', $requestedQuantity);
-                        $stmt->bindParam(':datum', $pickupDate);
+                        $stmt->bindParam(':aantal_pakketten', $requestedQuantity);
+                        $stmt->bindParam(':ophaaldatum', $pickupDate);
                         $stmt->execute();
                     }
 

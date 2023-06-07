@@ -5,7 +5,7 @@
   <style>
     .nav_bar {
       position: relative;
-      z-index: 9999;
+      z-index: 900;
     }
   </style>
 </head>
@@ -30,20 +30,32 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     <div>
       <nav class="nav_bar">
         <div onclick="location.href='index.php';">Home</div>
-        <div onclick="location.href='alleproducten.php';">Producten</div>
-        <div onclick="location.href='samenstellen.php';">Pakket Samenstellen</div>
+        <div class="dropdown">
+          <div class="hover-button">Overzichten</div>
+          <div class="dropdown-content">
+            <a href="alleproducten.php">Producten</a>
+            <?php 
+            if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
+            echo "<a href='leveranciersoverzicht.php'>Leveranciers</a>";
+            echo "<a href='overzichtgezinnen.php'>Gezinnen</a>";
+          } 
+          ?>
+          </div>
+        </div>
+        
         <div class="dropdown">
           <div class="hover-button">Toevoegen</div>
           <div class="dropdown-content">
             <a href="productentoevoegen.php">Producten Toevoegen</a>
             <?php 
-            if ($row && $row['role'] == "3") {
+            if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
               echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
-              echo "<a href='overzichtklanten1.php'>Gezinnen Toevoegen</a>"; 
+              echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>"; 
             } 
             ?>
           </div>
         </div>
+        <div onclick="location.href='samenstellen.php';">Voedselpakket</div>
         <div class="dropdown">
           <div style="color: black;">Welkom, <?php echo $_SESSION['user_name']; ?></div>
           <div class="dropdown-content">

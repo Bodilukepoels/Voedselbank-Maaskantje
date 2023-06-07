@@ -19,12 +19,14 @@
 
 <body>
     <?php
+    include "config.php";
+    include "navigation.php";
     if ($row && $row['role'] == "3") {
  
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     ?>
         <div class="container">
-            <h1 class="text-center mt-5">Overzicht leveranciers</h1>
+            <h1 style="color: black" class="text-center mt-5">Overzicht leveranciers</h1>
             <div class="table-responsive mt-4">
                 <table class="table table-striped">
                     <thead class="thead-dark">

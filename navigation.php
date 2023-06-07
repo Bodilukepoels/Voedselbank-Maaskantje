@@ -14,7 +14,7 @@
 session_start();
 include "config.php";
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
 $query = "SELECT * FROM user WHERE naam = :user_name";
@@ -59,7 +59,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         <div class="dropdown">
           <div style="color: black;">Welkom, <?php echo $_SESSION['user_name']; ?></div>
           <div class="dropdown-content">
-            <a href="logout.php">Logout</a>
+            <a href="profiel.php">Profiel</a>
           </div>
         </div>
       </nav>

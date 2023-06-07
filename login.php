@@ -10,20 +10,23 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     if ($stmt->rowCount() === 1) {
         $login = $stmt->fetch(PDO::FETCH_ASSOC);
         if (password_verify($_POST['Wachtwoord'], $login['Wachtwoord'])) {
-            // Set session variables
+            // Start the session
             session_start();
+            
+            // Store user details in session variables
             $_SESSION['loggedin'] = true;
-            $_SESSION['user_id'] = $login['id'];
+            $_SESSION['user_id'] = $login['AccountID'];
             $_SESSION['user_email'] = $login['Email'];
             $_SESSION['user_name'] = $login['Naam'];
+            
             header("Location: index.php");
             exit();
+        } else {
+            echo "<p style='color: black'>Incorrecte wachtwoord of email, probeer opnieuw.</p>";
         }
-        else {
-            echo "<p style='color: black'>Incorrecte wachtwoord of email probeer opnieuw.";
-        }
-}
-
+    } else {
+        echo "<p style='color: black'>Incorrecte wachtwoord of email, probeer opnieuw.</p>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -34,7 +37,6 @@ if (isset($_POST['Email'], $_POST['Wachtwoord'])) {
     <title>Login</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        
         .container {
             max-width: 400px;
             margin: 0 auto;

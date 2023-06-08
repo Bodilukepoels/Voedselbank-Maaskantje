@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $eanNummer = $_POST['eanNummer'];
 
         try {
-            $sql = "INSERT INTO producten (naam, beschrijving, catogorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO producten (naam, beschrijving, cetogorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer]);
             $successMessage = "Het product is succesvol toegevoegd.";
@@ -105,22 +105,26 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <label>Product Naam:</label>
                         <input type="text" class="form-control" id="naam" name="naam" required>
                     </div>
+
                     <div class="form-group">
                         <label>Beschrijving:</label>
                         <input type="text" class="form-control" id="beschrijving" name="beschrijving" required>
                     </div>
+
                     <div class="form-group">
                         <label>Categorie:</label>
                         <select class="form-control" id="categorie" name="categorie" required>
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="voorraad">Voorraad:</label>
                         <input type="number" class="form-control" id="voorraad" name="voorraad" required>
                     </div>
+
                     <div class="form-group">
                         <label>EAN Nummer:</label>
                         <input type="text" class="form-control" id="eanNummer" name="eanNummer" required>
@@ -138,7 +142,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <th>ID</th>
                         <th>Naam</th>
                         <th>Beschrijving</th>
-                        <th>Catogorie</th>
+                        <th>Categorie</th>
                         <th>Voorraad</th>
                         <th>EAN Nummer</th>
                         <th>Actions</th>
@@ -157,7 +161,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $product['id'] . "</td>";
                                 echo "<td>" . $product['naam'] . "</td>";
                                 echo "<td>" . $product['beschrijving'] . "</td>";
-                                echo "<td>" . $product['catogorie'] . "</td>";
+                                echo "<td>" . $product['categorie'] . "</td>";
                                 echo "<td>" . $product['voorraad'] . "</td>";
                                 echo "<td>" . $product['EAN-Nummer'] . "</td>";
                                 echo "<td>

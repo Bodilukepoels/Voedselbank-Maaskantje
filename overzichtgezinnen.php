@@ -48,7 +48,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1 style="color: black" class="text-center mb-4">gezin toevoegen</h1>
+                <h1 style="color: black" class="text-center mb-4">overzicht gezinnen</h1>
                 <?php if (isset($errorMessage)): ?>
                     <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
                 <?php endif; ?>
@@ -78,7 +78,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <label>Kinderen:</label>
                         <input type="text" class="form-control" id="kinderen" name="kinderen" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">gezin toevoegen</button>
+                    <button type="submit" class="btn btn-primary btn-block">overzicht gezinnen</button>
                 </form>
             </div>
         </div>

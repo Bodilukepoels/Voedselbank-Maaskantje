@@ -47,12 +47,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         <div class="dropdown">
           <div class="hover-button">Toevoegen</div>
           <div class="dropdown-content">
-            <a href="productentoevoegen.php">Producten Toevoegen</a>
+            <a href="productentoevoegen.php">Producten Bewerken</a>
             <?php 
             if ($row && ($row['role'] >= "2")) {
               echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
               echo "<a href='gezintoevoegen.php'>Gezinnen Toevoegen</a>";
-            } 
+            }
             ?>
           </div>
         </div>

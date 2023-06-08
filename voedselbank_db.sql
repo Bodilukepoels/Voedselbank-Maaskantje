@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 06 jun 2023 om 22:14
--- Serverversie: 10.4.28-MariaDB
--- PHP-versie: 8.2.4
+-- Gegenereerd op: 07 jun 2023 om 22:50
+-- Serverversie: 10.4.27-MariaDB
+-- PHP-versie: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,6 +43,19 @@ CREATE TABLE `categorie` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `gezinnen`
+--
+
+CREATE TABLE `gezinnen` (
+  `id` int(11) NOT NULL,
+  `naam` varchar(200) NOT NULL,
+  `volwassenen` int(10) NOT NULL,
+  `kinderen` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -116,7 +129,7 @@ INSERT INTO `user` (`AccountID`, `Email`, `Wachtwoord`, `Naam`, `Telefoonnummer`
 (2, 'gaming@gmail.com', '$2y$10$hDNissTX5KJ3n73JGqKF9.jCQ0.iM0NMi2FcjMlQrf4UkSMaTe6uW', 'ik ben een gebruiker', '069999999', 0),
 (3, 'billy@billy.com', '$2y$10$qzgN.m.TNfhaP8zV5qceF.ObbVgud.8dwaNTC/dEakdnP3fiQroUG', 'Billy', '06245677422', 0),
 (4, 'beingchilling@china.com', '$2y$10$uL/.d1xPGVyeVEdfeU5Dv.p1VmKPFCwp8F8PGV8cFosa8h6d0x6nq', 'benjemens?', '-', 0),
-(5, 'bodi@gmail.com', '$2y$10$Yr46.7IEpW7PBda74sfDFuSDJuk4yMXt1D8CBqRRI6rgNfVMhy9PO', 'bodi', 'bodi', 3),
+(5, 'bodi@gmail.com', '$2y$10$hFjsxjhMCFbC5ZHOAfF5E.fCQssmUSTaJqJFG6avZGTYxvFvXY/r.', 'bodi', 'bodi', 3),
 (6, 'bodilukepoels@gmail.com', '$2y$10$yEkRZ6jmrLn.xaTG2tPMXeLgeRTr05q5LtcxS59sM7UjDtyVG46V6', 'Bodi', '0640701827', 0);
 
 -- --------------------------------------------------------
@@ -126,7 +139,8 @@ INSERT INTO `user` (`AccountID`, `Email`, `Wachtwoord`, `Naam`, `Telefoonnummer`
 --
 
 CREATE TABLE `voedselpakket` (
-  `naam` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL,
+  `naam` varchar(255) NOT NULL,
   `producten` varchar(255) NOT NULL,
   `aantal_pakketten` int(255) NOT NULL,
   `ophaaldatum` date NOT NULL
@@ -136,9 +150,12 @@ CREATE TABLE `voedselpakket` (
 -- Gegevens worden geëxporteerd voor tabel `voedselpakket`
 --
 
-INSERT INTO `voedselpakket` (`naam`, `producten`, `aantal_pakketten`, `ophaaldatum`) VALUES
-('YES', '', 12, '2023-06-23'),
-('YES2', '', 24, '0000-00-00');
+INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `ophaaldatum`) VALUES
+(1, '0', '', 1, '2023-06-16'),
+(2, '0', '', 1, '2023-06-15'),
+(3, '0', '', 12, '2023-06-23'),
+(4, '0', '', 24, '0000-00-00'),
+(5, 'negersaus', 'Appel x1, Kaas x1, Appelflap x1, appeltaart x1', 2, '2023-06-07');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -154,6 +171,12 @@ ALTER TABLE `bestelling`
 -- Indexen voor tabel `categorie`
 --
 ALTER TABLE `categorie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `gezinnen`
+--
+ALTER TABLE `gezinnen`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -179,7 +202,7 @@ ALTER TABLE `user`
 -- Indexen voor tabel `voedselpakket`
 --
 ALTER TABLE `voedselpakket`
-  ADD PRIMARY KEY (`naam`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
@@ -198,22 +221,34 @@ ALTER TABLE `categorie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT voor een tabel `gezinnen`
+--
+ALTER TABLE `gezinnen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT voor een tabel `leveranciers`
 --
 ALTER TABLE `leveranciers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT voor een tabel `producten`
 --
 ALTER TABLE `producten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT voor een tabel `voedselpakket`
+--
+ALTER TABLE `voedselpakket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

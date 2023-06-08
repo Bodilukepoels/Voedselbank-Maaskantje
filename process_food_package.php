@@ -36,14 +36,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 unset($_POST['quantities']);
                 $numberOfPackages = $_POST['numberOfPackages'];
                 $pickupDate = $_POST['pickupDate'];
+                $pickupDate = $_POST['creationDate'];
 
                 try {
-                    $stmt = $conn->prepare("INSERT INTO voedselpakket (producten, aantal_pakketten, ophaaldatum) VALUES (:producten, :aantal_pakketten, :ophaaldatum)");
+                    $stmt = $conn->prepare("INSERT INTO voedselpakket (producten, aantal_pakketten, samenstellingsdatum, ophaaldatum) VALUES (:producten, :aantal_pakketten, :samenstellingsdatum, :ophaaldatum)");
 
                     for ($i = 0; $i < $numberOfPackages; $i++) {
                         $stmt->bindParam(':producten', implode(", ", $foodPackage));
                         $stmt->bindParam(':aantal_pakketten', $requestedQuantity);
                         $stmt->bindParam(':ophaaldatum', $pickupDate);
+                        $stmt->bindParam(':samenstellingdatum', $creationDate);
                         $stmt->execute();
                     }
 

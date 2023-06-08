@@ -8,13 +8,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
-        $selectedProducts = json_decode($_POST['selectedProducts'], true); // Decode the JSON string into an array
+        $selectedProducts = json_decode($_POST['selectedProducts'], true);
         $foodPackageName = $_POST['foodPackageName'];
         $numberOfPackages = $_POST['numberOfPackages'];
+        $creationDate = $_POST['creationDate'];
         $pickupDate = $_POST['pickupDate'];
 
         try {
-            $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, aantal_pakketten, ophaaldatum) VALUES (:naam, :producten, :aantal_pakketten, :ophaaldatum)");
+            $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, aantal_pakketten, samenstellingsdatum, ophaaldatum) VALUES (:naam, :producten, :aantal_pakketten, :samenstellingsdatum, :ophaaldatum)");
 
             $productString = '';
             foreach ($selectedProducts as $productId => $quantity) {
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':naam', $foodPackageName);
             $stmt->bindParam(':producten', $productString);
             $stmt->bindParam(':aantal_pakketten', $numberOfPackages);
+            $stmt->bindParam(':samenstellingsdatum', $creationDate);
             $stmt->bindParam(':ophaaldatum', $pickupDate);
             $stmt->execute();
 
@@ -195,6 +197,10 @@ function getProductById($conn, $productId)
             <div class="form-group">
                 <label for="numberOfPackages">Aantal pakketten:</label>
                 <input type="number" class="form-control" id="numberOfPackages" name="numberOfPackages" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="creationDate">Samenstellingstijd:</label>
+                <input type="date" class="form-control" id="creationDate" name="creationDate" required>
             </div>
             <div class="form-group">
                 <label for="pickupDate">Ophaaldatum:</label>

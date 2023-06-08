@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $eanNummer = $_POST['eanNummer'];
 
         try {
-            $sql = "INSERT INTO producten (naam, beschrijving, cetogorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO producten (naam, beschrijving, categorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer]);
             $successMessage = "Het product is succesvol toegevoegd.";

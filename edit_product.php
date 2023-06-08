@@ -1,17 +1,49 @@
 <?php
 include 'config.php';
 
+$categories = array(
+    '            ',
+    'Aardappelen',
+    'Groente',
+    'Fruit',
+    'Kaas',
+    'Vleeswaren',
+    'Zuivel',
+    'Plantaardig',
+    'Eieren',
+    'Bakkerij',
+    'Banket',
+    'Frisdrank',
+    'Sappen',
+    'Koffie',
+    'Thee',
+    'Pasta',
+    'Rijst',
+    'Wereldkeuken',
+    'Soepen',
+    'Sauzen',
+    'Kruiden',
+    'Olie',
+    'Snoep',
+    'Koek',
+    'Chocolade',
+    'Baby',
+    'Verzorging',
+    'Hygiëne'
+);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
     $naam = $_POST['naam'];
     $beschrijving = $_POST['beschrijving'];
+    $categorie = $_POST['categorie'];
     $voorraad = $_POST['voorraad'];
     $eanNummer = $_POST['eanNummer'];
 
     try {
-        $sql = "UPDATE producten SET naam = ?, beschrijving = ?, voorraad = ?, `EAN-Nummer` = ? WHERE id = ?";
+        $sql = "UPDATE producten SET naam = ?, beschrijving = ?, categorie = ?, voorraad = ?, `EAN-Nummer` = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer, $id]);
+        $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer, $id]);
         header("Location: productentoevoegen.php?success=3");
         exit;
     } catch (PDOException $e) {
@@ -93,6 +125,15 @@ try {
             <div class="form-group">
                 <label for="beschrijving">Beschrijving:</label>
                 <input type="text" class="form-control" id="beschrijving" name="beschrijving" value="<?php echo $product['beschrijving']; ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Categorie:</label>
+                <select class="form-control" id="categorie" name="categorie" required>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo $category; ?>" <?php if ($category == $product['categorie']) echo 'selected'; ?>><?php echo $category; ?></option>
+                        <?php endforeach; ?>
+                </select>
             </div>
 
             <div class="form-group">

@@ -1,18 +1,51 @@
 <?php
 include "navigation.php";
+
+$categories = array(
+    '            ',
+    'Aardappelen',
+    'Groente',
+    'Fruit',
+    'Kaas',
+    'Vleeswaren',
+    'Zuivel',
+    'Plantaardig',
+    'Eieren',
+    'Bakkerij',
+    'Banket',
+    'Frisdrank',
+    'Sappen',
+    'Koffie',
+    'Thee',
+    'Pasta',
+    'Rijst',
+    'Wereldkeuken',
+    'Soepen',
+    'Sauzen',
+    'Kruiden',
+    'Olie',
+    'Snoep',
+    'Koek',
+    'Chocolade',
+    'Baby',
+    'Verzorging',
+    'Hygiëne'
+);
+
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     include "config.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $naam = $_POST['naam'];
         $beschrijving = $_POST['beschrijving'];
+        $categorie = $_POST['categorie'];
         $voorraad = $_POST['voorraad'];
         $eanNummer = $_POST['eanNummer'];
 
         try {
-            $sql = "INSERT INTO producten (naam, beschrijving, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO producten (naam, beschrijving, catogorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$naam, $beschrijving, $voorraad, $eanNummer]);
+            $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer]);
             $successMessage = "Het product is succesvol toegevoegd.";
         } catch (PDOException $e) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
@@ -77,6 +110,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <input type="text" class="form-control" id="beschrijving" name="beschrijving" required>
                     </div>
                     <div class="form-group">
+                        <label>Categorie:</label>
+                        <select class="form-control" id="categorie" name="categorie" required>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                    <div class="form-group">
                         <label for="voorraad">Voorraad:</label>
                         <input type="number" class="form-control" id="voorraad" name="voorraad" required>
                     </div>
@@ -97,6 +138,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <th>ID</th>
                         <th>Naam</th>
                         <th>Beschrijving</th>
+                        <th>Catogorie</th>
                         <th>Voorraad</th>
                         <th>EAN Nummer</th>
                         <th>Actions</th>
@@ -115,6 +157,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $product['id'] . "</td>";
                                 echo "<td>" . $product['naam'] . "</td>";
                                 echo "<td>" . $product['beschrijving'] . "</td>";
+                                echo "<td>" . $product['catogorie'] . "</td>";
                                 echo "<td>" . $product['voorraad'] . "</td>";
                                 echo "<td>" . $product['EAN-Nummer'] . "</td>";
                                 echo "<td>

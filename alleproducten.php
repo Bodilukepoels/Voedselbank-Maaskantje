@@ -19,6 +19,7 @@
             <th>ID</th>
             <th>Naam</th>
             <th>Beschrijving</th>
+            <th>Catogorie</th>
             <th>Voorraad</th>
             <th>EAN Nummer</th>
         </tr>
@@ -37,6 +38,7 @@
                 echo "<tr>";
                 echo "<td>" . $product['id'] . "</td>";
                 echo "<td>" . $product['naam'] . "</td>";
+                echo "<td>" . $product['beschrijving'] . "</td>";
                 echo "<td>" . $product['beschrijving'] . "</td>";
                 echo "<td>" . $product['voorraad'] . "</td>";
                 echo "<td>" . $product['EAN-Nummer'] . "</td>";

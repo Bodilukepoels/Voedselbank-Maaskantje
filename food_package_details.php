@@ -2,13 +2,10 @@
 include "navigation.php";
 include "config.php";
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     header("Location: index.php");
     exit();
 }
-
-// Retrieve the food package details from the database
 if (isset($_GET['package_id'])) {
     $packageId = $_GET['package_id'];
 
@@ -98,6 +95,7 @@ if (isset($_GET['package_id'])) {
                 <?php if (isset($package)) : ?>
                     <p><strong>Naam van het voedselpakket:</strong> <?php echo $package['naam']; ?></p>
                     <p><strong>Aantal pakketten:</strong> <?php echo $package['aantal_pakketten']; ?></p>
+                    <p><strong>Samenstellingsdatum:</strong> <?php echo $package['samenstellingsdatum']; ?></p>
                     <p><strong>Ophaaldatum:</strong> <?php echo $package['ophaaldatum']; ?></p>
                     <p><strong>Geselecteerde producten:</strong> <?php echo $package['producten']; ?></p>
                 <?php else : ?>

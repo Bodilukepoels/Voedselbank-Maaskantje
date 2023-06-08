@@ -31,39 +31,34 @@
         </tr>
         </div>
         </CENTER>
-        <?php
+<?php
         include 'config.php';
 
         $sql = "SELECT * FROM producten";
         $search = "";
         $filtercategory = "";
-        if (isset($_GET['search'])) {
-            $search = $_GET['search'];
-            $sql .= " WHERE naam LIKE :search OR beschrijving LIKE :search";
+        $params = [];
+
+        if (isset($_GET['search']) && $_GET['search'] != '') {
+            $search = "%" . $_GET['search'] . "%";
+            $sql .= " WHERE (naam LIKE :search OR beschrijving LIKE :search)";
+            $params[':search'] = $search;
         }
 
-        if (isset($_GET['filtercategory'])) {
+        if (isset($_GET['filtercategory']) && $_GET['filtercategory'] != '') {
             $filtercategory = $_GET['filtercategory'];
             $sql .= empty($search) ? " WHERE " : " AND ";
             $sql .= "categorie = :filtercategory";
+            $params[':filtercategory'] = $filtercategory;
         }
 
-        if (isset($_GET['sortname'])) {
+        if (isset($_GET['sortname']) && $_GET['sortname'] == "1") {
             $sql .= " ORDER BY naam";
         }
 
         try {
             $stmt = $conn->prepare($sql);
-            if (!empty($search)) {
-                $search = "%$search%";
-                $stmt->bindParam(":search", $search);
-            }
-
-            if (!empty($filtercategory)) {
-                $stmt->bindParam(":filtercategory", $filtercategory);
-            }
-
-            $stmt->execute();
+            $stmt->execute($params);
             $products = $stmt->fetchAll();
 
             foreach ($products as $product) {

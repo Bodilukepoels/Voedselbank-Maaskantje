@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 07 jun 2023 om 22:50
--- Serverversie: 10.4.27-MariaDB
--- PHP-versie: 8.1.12
+-- Gegenereerd op: 08 jun 2023 om 11:36
+-- Serverversie: 10.4.25-MariaDB
+-- PHP-versie: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,19 +31,7 @@ CREATE TABLE `bestelling` (
   `BestellingID` int(11) NOT NULL,
   `KoperAccountID` int(11) NOT NULL,
   `BestelingInhoud` varchar(999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `categorie`
---
-
-CREATE TABLE `categorie` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,7 +44,7 @@ CREATE TABLE `gezinnen` (
   `naam` varchar(200) NOT NULL,
   `volwassenen` int(10) NOT NULL,
   `kinderen` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -72,7 +60,7 @@ CREATE TABLE `leveranciers` (
   `postcode` varchar(6) NOT NULL,
   `bezorgingsdatum` date NOT NULL,
   `bezorgingstijd` time(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `leveranciers`
@@ -91,19 +79,18 @@ CREATE TABLE `producten` (
   `id` int(11) NOT NULL,
   `naam` varchar(255) NOT NULL,
   `beschrijving` varchar(100) NOT NULL,
+  `categorie` varchar(500) NOT NULL,
   `voorraad` int(11) NOT NULL,
   `EAN-Nummer` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `producten`
 --
 
-INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `voorraad`, `EAN-Nummer`) VALUES
-(16, 'Appel', 'grote mooie appels', 283, '38293849192'),
-(23, 'Kaas', 'lekkere kaas', 123, '98729487128'),
-(25, 'Appelflap', 'Lekkere zoete appel met bladerdeeg en suiker', 44, '38294829192'),
-(26, 'appeltaart', 'lekkere appeltaart', 24, '2948140283');
+INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, `EAN-Nummer`) VALUES
+(29, 'kaas', 'kaas', 'Fruit', 1, '11267532348'),
+(30, 'melk', 'melk', 'Koek', 200, '12345678910');
 
 -- --------------------------------------------------------
 
@@ -118,7 +105,7 @@ CREATE TABLE `user` (
   `Naam` varchar(100) NOT NULL,
   `Telefoonnummer` varchar(100) NOT NULL,
   `role` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
@@ -144,7 +131,7 @@ CREATE TABLE `voedselpakket` (
   `producten` varchar(255) NOT NULL,
   `aantal_pakketten` int(255) NOT NULL,
   `ophaaldatum` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `voedselpakket`
@@ -166,12 +153,6 @@ INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `oph
 --
 ALTER TABLE `bestelling`
   ADD PRIMARY KEY (`BestellingID`);
-
---
--- Indexen voor tabel `categorie`
---
-ALTER TABLE `categorie`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexen voor tabel `gezinnen`
@@ -215,12 +196,6 @@ ALTER TABLE `bestelling`
   MODIFY `BestellingID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT voor een tabel `categorie`
---
-ALTER TABLE `categorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT voor een tabel `gezinnen`
 --
 ALTER TABLE `gezinnen`
@@ -236,7 +211,7 @@ ALTER TABLE `leveranciers`
 -- AUTO_INCREMENT voor een tabel `producten`
 --
 ALTER TABLE `producten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`

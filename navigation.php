@@ -35,7 +35,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
           <div class="dropdown-content">
             <a href="alleproducten.php">Producten</a>
             <?php 
-            if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
+            if ($row && ($row['role'] >= "2")) {
             echo "<a href='leveranciersoverzicht.php'>Leveranciers</a>";
             echo "<a href='overzichtgezinnen.php'>Gezinnen</a>";
             echo "<a href='overzichtgebruikers.php'>Gebruikers</a>"; 
@@ -49,7 +49,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
           <div class="dropdown-content">
             <a href="productentoevoegen.php">Producten Toevoegen</a>
             <?php 
-            if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
+            if ($row && ($row['role'] >= "2")) {
               echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
               echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>";
             } 

@@ -1,5 +1,19 @@
 <?php
 include "navigation.php";
+
+$wensen = array(
+    '            ',
+    'niks',
+    'tarwe',
+    'noten',
+    'pinda',
+    'sesam',
+    'melk(eiwit)',
+    'soja',
+    'vis',
+    'snelle bezorging',
+);
+
 if ($row && $row['role'] == "3") {
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     include "config.php";
@@ -11,11 +25,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $postcode = $_POST['postcode'];
         $mail = $_POST['mail'];
         $telefoonnummer = $_POST['telefoonnummer'];
+        $wensen = $_POST['wensen'];
         
         try {
-            $sql = "INSERT INTO gezinnen (naam, volwassenen, kinderen, postcode, mail, telefoonnummer) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO gezinnen (naam, volwassenen, kinderen, postcode, mail, telefoonnummer, wensen) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$naam, $volwassenen, $kinderen, $postcode, $mail, $telefoonnummer]);
+            $stmt->execute([$naam, $volwassenen, $kinderen, $postcode, $mail, $telefoonnummer, $wensen]);
             $successMessage = "De gezin is succesvol toegevoegd.";
         } catch (PDOException $e) {
             $errorMessage = "Iets is misgegaan: " . $e->getMessage();
@@ -98,6 +113,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <label>Telefoonnummer:</label>
                         <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" required>
                     </div>
+
+                    <div class="form-group">
+                        <label>Wensen/allergien:</label>
+                        <select class="form-control" id="wensen" name="wensen" required>
+                            <?php foreach ($wensen as $wensen): ?>
+                                <option value="<?php echo $wensen; ?>"><?php echo $wensen; ?></option>
+                                <?php endforeach; ?>
+                        </select>
+                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block">Gezin toevoegen</button>
                 </form>
             </div>
@@ -114,6 +139,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     <th>Postcode</th>
                     <th>Mail</th>
                     <th>Telefoonnummer</th>
+                    <th>Wensen</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,6 +158,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $gezin['postcode'] . "</td>";
                                 echo "<td>" . $gezin['mail'] . "</td>";
                                 echo "<td>" . $gezin['telefoonnummer'] . "</td>";
+                                echo "<td>" . $gezin['wensen'] . "</td>";
                                 echo "</tr>";
                                 echo "<td>
                                 

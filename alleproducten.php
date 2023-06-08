@@ -13,13 +13,19 @@
     ?>
     <br>
     <CENTER><h1 style="color: black;">Overzicht producten</h1>
+    <form method="GET" action="">
+        Filter by name (A-Z): <input type="checkbox" name="sortname" value="1">
+        Filter by category: <input type="text" name="filtercategory">
+        Search: <input type="text" name="search">
+        <input type="submit" value="Filter/Search">
+    </form>
     <div class="table-responsive mt-4">
         <table class="table table-striped">
         <tr>
             <th>ID</th>
             <th>Naam</th>
             <th>Beschrijving</th>
-            <th>Catogorie</th>
+            <th>Categorie</th>
             <th>Voorraad</th>
             <th>EAN Nummer</th>
         </tr>
@@ -28,9 +34,35 @@
         <?php
         include 'config.php';
 
+        $sql = "SELECT * FROM producten";
+        $search = "";
+        $filtercategory = "";
+        if (isset($_GET['search'])) {
+            $search = $_GET['search'];
+            $sql .= " WHERE naam LIKE :search OR beschrijving LIKE :search";
+        }
+
+        if (isset($_GET['filtercategory'])) {
+            $filtercategory = $_GET['filtercategory'];
+            $sql .= empty($search) ? " WHERE " : " AND ";
+            $sql .= "categorie = :filtercategory";
+        }
+
+        if (isset($_GET['sortname'])) {
+            $sql .= " ORDER BY naam";
+        }
+
         try {
-            $sql = "SELECT * FROM producten";
             $stmt = $conn->prepare($sql);
+            if (!empty($search)) {
+                $search = "%$search%";
+                $stmt->bindParam(":search", $search);
+            }
+
+            if (!empty($filtercategory)) {
+                $stmt->bindParam(":filtercategory", $filtercategory);
+            }
+
             $stmt->execute();
             $products = $stmt->fetchAll();
 
@@ -39,7 +71,7 @@
                 echo "<td>" . $product['id'] . "</td>";
                 echo "<td>" . $product['naam'] . "</td>";
                 echo "<td>" . $product['beschrijving'] . "</td>";
-                echo "<td>" . $product['beschrijving'] . "</td>";
+                echo "<td>" . $product['categorie'] . "</td>";
                 echo "<td>" . $product['voorraad'] . "</td>";
                 echo "<td>" . $product['EAN-Nummer'] . "</td>";
                 echo "</tr>";
@@ -47,14 +79,8 @@
         } catch (PDOException $e) {
             echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
         }
+    }
     ?>
-        ?>
     </table>
 </body>
 </html>
-  <?php
-  }
-  else {
-    header("Location: index.php");
-  }
-  ?>

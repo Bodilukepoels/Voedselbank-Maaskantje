@@ -1,18 +1,7 @@
 <?php
 include "navigation.php";
 
-$categories = array(
-    '            ',
-    'Aardappelen, Groente, Fruit',
-    'Kaas, Vleeswaren',
-    'Zuivel, Plantaardig en eieren',
-    'Bakkerij en Banket',
-    'Frisdrank, Sappen, Kofie en Thee',
-    'Pasta, Rijst en wereldkeuken',
-    'Soepen, Sauzen, Kruiden en Olie',
-    'Snoep, Koek, Chips en Chocolade',
-    'Baby, Verzorging, Hygiene',
-);
+include "variables.php";
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     include "config.php";

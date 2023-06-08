@@ -51,7 +51,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             <?php 
             if ($row && ($row['role'] >= "2")) {
               echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
-              echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>";
+              echo "<a href='gezintoevoegen.php'>Gezinnen Toevoegen</a>";
             } 
             ?>
           </div>

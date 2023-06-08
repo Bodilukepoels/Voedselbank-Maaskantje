@@ -38,6 +38,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
             echo "<a href='leveranciersoverzicht.php'>Leveranciers</a>";
             echo "<a href='overzichtgezinnen.php'>Gezinnen</a>";
+            echo "<a href='overzichtgebruikers.php'>Gebruikers</a>"; 
           } 
           ?>
           </div>
@@ -50,7 +51,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             <?php 
             if ($row && ($row['role'] == "2" || $row['role'] == "3")) {
               echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
-              echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>"; 
+              echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>";
             } 
             ?>
           </div>

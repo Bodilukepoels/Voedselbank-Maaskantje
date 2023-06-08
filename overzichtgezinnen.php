@@ -24,6 +24,7 @@
             <th>Postcode</th>
             <th>Mail</th>
             <th>Telefoonnummer</th>
+            <th>Wensen</th>
         </tr>
         </div>
         </CENTER>
@@ -45,6 +46,7 @@
                 echo "<td>" . $gezin['postcode'] . "</td>";
                 echo "<td>" . $gezin['mail'] . "</td>";
                 echo "<td>" . $gezin['telefoonnummer'] . "</td>";
+                echo "<td>" . $gezin['wensen'] . "</td>";
                 echo "</tr>";
             }
         } catch (PDOException $e) {

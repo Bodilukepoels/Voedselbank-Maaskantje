@@ -18,10 +18,16 @@
                 <tr>
                     <th>ID</th>
                     <th>Naam</th>
+                    <th>Role</th>
+                    <th>Telefoonnummer</th>
                 </tr>
                 <?php
                 include 'config.php';
-
+                $roleLabels = [
+                    0 => 'Vrijwilliger',
+                    2 => 'Medewerker',
+                    3 => 'Directie'
+                ];
                 try {
                     $sql = "SELECT * FROM user";
                     $stmt = $conn->prepare($sql);
@@ -32,6 +38,8 @@
                         echo "<tr>";
                         echo "<td>" . $user['AccountID'] . "</td>";
                         echo "<td>" . $user['Naam'] . "</td>";
+                        echo "<td>" . (isset($roleLabels[$user['role']]) ? $roleLabels[$user['role']] : 'Onbekend') . "</td>";
+                        echo "<td>" . $user['Telefoonnummer'] . "</td>";
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {

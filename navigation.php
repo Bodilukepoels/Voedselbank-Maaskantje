@@ -50,8 +50,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             <a href="productentoevoegen.php">Producten Bewerken</a>
             <?php 
             if ($row && ($row['role'] >= "2")) {
-              echo "<a href='leverancierstoevoegen.php'>Leveranciers Toevoegen</a>";
-              echo "<a href='overzichtgezinnen.php'>Gezinnen Toevoegen</a>";
+              echo "<a href='leverancierstoevoegen.php'>Leveranciers Bewerken</a>";
+              echo "<a href='overzichtgezinnen.php'>Gezinnen Bewerken</a>";
             } 
             ?>
           </div>

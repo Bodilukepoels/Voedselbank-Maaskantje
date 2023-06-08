@@ -60,6 +60,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
           <div style="color: black;">Welkom, <?php echo $_SESSION['user_name']; ?></div>
           <div class="dropdown-content">
             <a href="profiel.php">Profiel</a>
+            <a href="logout.php">Uitloggen</a>
           </div>
         </div>
       </nav>

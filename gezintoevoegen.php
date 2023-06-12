@@ -73,83 +73,89 @@ if ($row && $row['role'] == "3") {
                 <div class="alert alert-success"><?php echo $successMessage; ?></div>
             <?php endif; ?>
             <?php if (isset($deleteSuccessMessage)): ?>
-                <div class="alert alert-success mt-4"><?php echo $deleteSuccessMessage; ?></div>
-            <?php endif; ?>
-            <?php if (isset($deleteErrorMessage)): ?>
-                <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
-            <?php endif; ?>
-            <?php if (isset($editSuccessMessage)): ?>
-                <div class="alert alert-success"><?php echo $editSuccessMessage; ?></div>
-            <?php endif; ?>
+    <div class="alert alert-success mt-4"><?php echo $deleteSuccessMessage; ?></div>
+<?php endif; ?>
+<?php if (isset($deleteErrorMessage)): ?>
+    <div class="alert alert-danger mt-4"><?php echo $deleteErrorMessage; ?></div>
+<?php endif; ?>
+<?php if (isset($editSuccessMessage)): ?>
+    <div class="alert alert-success"><?php echo $editSuccessMessage; ?></div>
+<?php endif; ?>
 
-            <form action="" method="POST">
-                <div class="form-group">
-                    <label>Gezinsnaam:</label>
-                    <input type="text" class="form-control" id="naam" name="naam" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Volwassenen:</label>
-                    <input type="text" class="form-control" id="volwassenen" name="volwassenen" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Kinderen:</label>
-                    <input type="text" class="form-control" id="kinderen" name="kinderen" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Postcode:</label>
-                    <input type="text" class="form-control" id="postcode" name="postcode" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Mail:</label>
-                    <input type="text" class="form-control" id="mail" name="mail" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Telefoonnummer:</label>
-                    <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Allergieën:</label>
-                    <select class="form-control" id="allergieën" name="allergieën" required>
-                        <?php foreach ($allergieën as $option): ?>
-                            <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block">Gezin toevoegen</button>
-            </form>
-        </div>
+<form action="" method="POST">
+    <div class="form-group">
+        <label>Gezinsnaam:</label>
+        <input type="text" class="form-control" id="naam" name="naam" required>
     </div>
 
-    <h2 style="color: black;" class="text-center mt-5">Bestaande gezinnen</h2>
-    <div class="table-responsive mt-4">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th>Gezinsnaam</th>
-                <th>Volwassenen</th>
-                <th>Kinderen</th>
-                <th>Postcode</th>
-                <th>Mail</th>
-                <th>Telefoonnummer</th>
-                <th>Allergieën</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            try {
-                $sql = "SELECT * FROM gezinnen";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $gezinnen = $stmt->fetchAll();
+    <div class="form-group">
+        <label>Volwassenen:</label>
+        <input type="text" class="form-control" id="volwassenen" name="volwassenen" required>
+    </div>
 
+    <div class="form-group">
+        <label>Kinderen:</label>
+        <input type="text" class="form-control" id="kinderen" name="kinderen" required>
+    </div>
+
+    <div class="form-group">
+        <label>Postcode:</label>
+        <input type="text" class="form-control" id="postcode" name="postcode" required>
+    </div>
+
+    <div class="form-group">
+        <label>Mail:</label>
+        <input type="text" class="form-control" id="mail" name="mail" required>
+    </div>
+
+    <div class="form-group">
+        <label>Telefoonnummer:</label>
+        <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" required>
+    </div>
+
+    <div class="form-group">
+        <label>Allergieën:</label>
+        <div id="allergieën-container">
+            <div class="input-group mb-2">
+                <select class="form-control allergieën-select" name="allergieën[]" required>
+                    <option value="">Selecteer allergie</option>
+                        <?php foreach ($allergieën as $allergie): ?>
+                        <option value="<?php echo $allergie; ?>"><?php echo $allergie; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-danger delete-allergy">-</button>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary mt-2" id="add-allergy">+</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Gezin toevoegen</button>
+</form>
+</div>
+</div>
+
+<h2 style="color: black;" class="text-center mt-5">Bestaande gezinnen</h2>
+<div class="table-responsive mt-4">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Gezinsnaam</th>
+            <th>Volwassenen</th>
+            <th>Kinderen</th>
+            <th>Postcode</th>
+            <th>Mail</th>
+            <th>Telefoonnummer</th>
+            <th>Allergieën</th>
+            <th>Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        try {
+            $gezinnen = $db->query("SELECT * FROM gezinnen")->fetchAll(PDO::FETCH_ASSOC);
+            if ($gezinnen) {
                 foreach ($gezinnen as $gezin) {
                     echo "<tr>";
                     echo "<td>" . $gezin['naam'] . "</td>";
@@ -158,10 +164,9 @@ if ($row && $row['role'] == "3") {
                     echo "<td>" . $gezin['postcode'] . "</td>";
                     echo "<td>" . $gezin['mail'] . "</td>";
                     echo "<td>" . $gezin['telefoonnummer'] . "</td>";
-                    echo "<td>" . $gezin['allergieën'] . "</td>";
-                    echo "<td>
-                                
-                    <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $gezin['id'] . "'>Verwijder</button>
+                    echo "<td>" . implode(", ", json_decode($gezin['allergieën'], true)) . "</td>";
+                    echo "<td>                               
+                        <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $gezin['id'] . "'>Verwijder</button>
                     </td>";
                     echo "</tr>";
                     echo "<div class='modal fade' id='confirmDeleteModal" . $gezin['id'] . "' tabindex='-1' role='dialog' aria-labelledby='confirmDeleteModalLabel" . $gezin['id'] . "' aria-hidden='true'>
@@ -184,17 +189,39 @@ if ($row && $row['role'] == "3") {
                         </div>
                     </div>";
                 }
-            } catch (PDOException $e) {
-                echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
             }
-            ?>
-            </tbody>
-        </table>
-    </div>
+        } catch (PDOException $e) {
+            echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
+        }
+        ?>
+        </tbody>
+    </table>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var allergyCount = 1;
+
+        $("#add-allergy").click(function() {
+            allergyCount++;
+            var inputHtml = '<div class="input-group mb-2"><select class="form-control allergieën-select" name="allergieën[]" required><option value="">Selecteer allergie</option><?php foreach ($allergieën as $allergie): ?><option value="<?php echo $allergie; ?>"><?php echo $allergie; ?></option><?php endforeach; ?></select><div class="input-group-append"><button type="button" class="btn btn-danger delete-allergy">-</button></div></div>';
+            $("#allergieën-container").append(inputHtml);
+        });
+
+        $(document).on('click', '.delete-allergy', function() {
+            $(this).closest('.input-group').remove();
+        });
+
+        $(document).on('change', '.allergieën-select', function() {
+            var selectedValue = $(this).val();
+            $(this).closest('.input-group').find('.form-control').val(selectedValue);
+        });
+    });
+</script>
+
 </body>
 </html>
 <?php
@@ -202,4 +229,3 @@ if ($row && $row['role'] == "3") {
     header("location:index.php");
 }
 ?>
-

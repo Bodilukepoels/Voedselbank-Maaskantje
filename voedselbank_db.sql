@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 12 jun 2023 om 20:15
+-- Gegenereerd op: 12 jun 2023 om 21:02
 -- Serverversie: 10.4.28-MariaDB
 -- PHP-versie: 8.2.4
 
@@ -49,15 +49,15 @@ CREATE TABLE `extra` (
 --
 
 INSERT INTO `extra` (`beschikbare_allergieën`, `beschikbare_categorieën`) VALUES
+('melk(eiwit)', 'Pasta, Rijst en wereldkeuken'),
 ('niks', 'Aardappelen, Groente, Fruit'),
-('tarwe', 'Kaas, Vleeswaren'),
 ('noten', 'Zuivel, Plantaardig en eieren'),
 ('pinda', 'Bakkerij en Banket'),
+('schaaldieren', 'Baby, Verzorging, Hygiene'),
 ('sesam', 'Frisdrank, Sappen, Kofie en Thee'),
-('melk(eiwit)', 'Pasta, Rijst en wereldkeuken'),
 ('soja', 'Soepen, Sauzen, Kruiden en Olie'),
-('vis', 'Snoep, Koek, Chips en Chocolade'),
-('snelle bezorging', 'Baby, Verzorging, Hygiene');
+('tarwe', 'Kaas, Vleeswaren'),
+('vis', 'Snoep, Koek, Chips en Chocolade');
 
 -- --------------------------------------------------------
 
@@ -75,6 +75,14 @@ CREATE TABLE `gezinnen` (
   `telefoonnummer` int(11) NOT NULL,
   `wensen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `gezinnen`
+--
+
+INSERT INTO `gezinnen` (`id`, `naam`, `volwassenen`, `kinderen`, `postcode`, `mail`, `telefoonnummer`, `wensen`) VALUES
+(27, 'Mark', 2, 3, '1444LO', 'familiemark@gmail.com', 680182031, 'pinda'),
+(29, 'peiter', 2, 3, '1444LO', 'familiepeiter@gmail.com', 680182036, 'Array');
 
 -- --------------------------------------------------------
 
@@ -171,7 +179,8 @@ CREATE TABLE `voedselpakket` (
 --
 
 INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `samenstellingsdatum`, `ophaaldatum`) VALUES
-(11, 'Familiepakket', 'kaas x3, melk x3, groene melk x4', 24, '2023-06-13', '2023-06-22');
+(11, 'Familiepakket', 'kaas x3, melk x3, groene melk x4', 24, '2023-06-13', '2023-06-22'),
+(12, 'yes', 'kaas x1, melk x2, groene melk x24', 32, '2023-06-20', '2023-06-30');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -182,6 +191,12 @@ INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `sam
 --
 ALTER TABLE `bestelling`
   ADD PRIMARY KEY (`BestellingID`);
+
+--
+-- Indexen voor tabel `extra`
+--
+ALTER TABLE `extra`
+  ADD PRIMARY KEY (`beschikbare_allergieën`);
 
 --
 -- Indexen voor tabel `gezinnen`
@@ -228,7 +243,7 @@ ALTER TABLE `bestelling`
 -- AUTO_INCREMENT voor een tabel `gezinnen`
 --
 ALTER TABLE `gezinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT voor een tabel `leveranciers`
@@ -252,7 +267,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT voor een tabel `voedselpakket`
 --
 ALTER TABLE `voedselpakket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

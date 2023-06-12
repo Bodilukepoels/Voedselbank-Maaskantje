@@ -76,7 +76,7 @@ if (isset($_POST['newPassword']) && isset($_POST['currentPassword'])) {
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
     <div class="container">
         <h1>Hallo, <?php echo $user['Naam']; ?>!</h1>
         <p>Rol: <?php echo $role; ?></p>

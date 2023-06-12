@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 08 jun 2023 om 14:41
--- Serverversie: 10.4.25-MariaDB
--- PHP-versie: 8.1.10
+-- Gegenereerd op: 12 jun 2023 om 20:15
+-- Serverversie: 10.4.28-MariaDB
+-- PHP-versie: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,33 @@ CREATE TABLE `bestelling` (
   `BestellingID` int(11) NOT NULL,
   `KoperAccountID` int(11) NOT NULL,
   `BestelingInhoud` varchar(999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `extra`
+--
+
+CREATE TABLE `extra` (
+  `beschikbare_allergieën` varchar(255) NOT NULL,
+  `beschikbare_categorieën` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `extra`
+--
+
+INSERT INTO `extra` (`beschikbare_allergieën`, `beschikbare_categorieën`) VALUES
+('niks', 'Aardappelen, Groente, Fruit'),
+('tarwe', 'Kaas, Vleeswaren'),
+('noten', 'Zuivel, Plantaardig en eieren'),
+('pinda', 'Bakkerij en Banket'),
+('sesam', 'Frisdrank, Sappen, Kofie en Thee'),
+('melk(eiwit)', 'Pasta, Rijst en wereldkeuken'),
+('soja', 'Soepen, Sauzen, Kruiden en Olie'),
+('vis', 'Snoep, Koek, Chips en Chocolade'),
+('snelle bezorging', 'Baby, Verzorging, Hygiene');
 
 -- --------------------------------------------------------
 
@@ -44,11 +70,11 @@ CREATE TABLE `gezinnen` (
   `naam` varchar(200) NOT NULL,
   `volwassenen` int(11) NOT NULL,
   `kinderen` int(11) NOT NULL,
-  `postcode` int(11) NOT NULL,
+  `postcode` varchar(25) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `telefoonnummer` int(11) NOT NULL,
   `wensen` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -64,7 +90,7 @@ CREATE TABLE `leveranciers` (
   `postcode` varchar(6) NOT NULL,
   `bezorgingsdatum` date NOT NULL,
   `bezorgingstijd` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `leveranciers`
@@ -87,15 +113,15 @@ CREATE TABLE `producten` (
   `categorie` varchar(500) NOT NULL,
   `voorraad` int(11) NOT NULL,
   `EAN-Nummer` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `producten`
 --
 
 INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, `EAN-Nummer`) VALUES
-(29, 'kaas', 'kaas', 'Fruit', 100, '11267532348'),
-(30, 'melk', 'melk', 'Koek', 200, '12345678910'),
+(29, 'kaas', 'kaas', 'Bakkerij en Banket', 100, '11267532348'),
+(30, 'melk', 'melk', 'Snoep, Koek, Chips en Chocolade', 200, '12345678910'),
 (31, 'groene melk', 'de melk is groen', 'Sappen', 100, '29343232457324732748');
 
 -- --------------------------------------------------------
@@ -111,7 +137,7 @@ CREATE TABLE `user` (
   `Naam` varchar(100) NOT NULL,
   `Telefoonnummer` varchar(100) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
@@ -138,7 +164,14 @@ CREATE TABLE `voedselpakket` (
   `aantal_pakketten` int(11) NOT NULL,
   `samenstellingsdatum` date NOT NULL DEFAULT '0000-00-00',
   `ophaaldatum` date NOT NULL DEFAULT '0000-00-00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `voedselpakket`
+--
+
+INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `samenstellingsdatum`, `ophaaldatum`) VALUES
+(11, 'Familiepakket', 'kaas x3, melk x3, groene melk x4', 24, '2023-06-13', '2023-06-22');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -195,7 +228,7 @@ ALTER TABLE `bestelling`
 -- AUTO_INCREMENT voor een tabel `gezinnen`
 --
 ALTER TABLE `gezinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT voor een tabel `leveranciers`
@@ -219,7 +252,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT voor een tabel `voedselpakket`
 --
 ALTER TABLE `voedselpakket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

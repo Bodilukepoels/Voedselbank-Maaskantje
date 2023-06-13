@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 13 jun 2023 om 13:33
+-- Gegenereerd op: 13 jun 2023 om 13:49
 -- Serverversie: 10.4.25-MariaDB
 -- PHP-versie: 8.1.10
 
@@ -49,15 +49,15 @@ CREATE TABLE `extra` (
 --
 
 INSERT INTO `extra` (`beschikbare_allergieën`, `beschikbare_categorieën`) VALUES
-('melk(eiwit)', 'Pasta, Rijst en wereldkeuken'),
+('melk(eiwit) allergie', 'Pasta, Rijst en wereldkeuken'),
 ('niks', 'Aardappelen, Groente, Fruit'),
-('noten', 'Zuivel, Plantaardig en eieren'),
-('pinda', 'Bakkerij en Banket'),
-('schaaldieren', 'Baby, Verzorging, Hygiene'),
-('sesam', 'Frisdrank, Sappen, Kofie en Thee'),
-('soja', 'Soepen, Sauzen, Kruiden en Olie'),
-('tarwe', 'Kaas, Vleeswaren'),
-('vis', 'Snoep, Koek, Chips en Chocolade');
+('notenallergie', 'Zuivel, Plantaardig en eieren'),
+('pindaallergie', 'Bakkerij en Banket'),
+('schaaldierenallergie', 'Baby, Verzorging, Hygiene'),
+('sesamallergie', 'Frisdrank, Sappen, Kofie en Thee'),
+('sojaallergie', 'Soepen, Sauzen, Kruiden en Olie'),
+('tarweallergie', 'Kaas, Vleeswaren'),
+('visallergie', 'Snoep, Koek, Chips en Chocolade');
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,8 @@ CREATE TABLE `gezinnen` (
 
 INSERT INTO `gezinnen` (`id`, `naam`, `volwassenen`, `kinderen`, `postcode`, `mail`, `telefoonnummer`, `wensen`) VALUES
 (27, 'Mark', 2, 3, '1444LO', 'familiemark@gmail.com', 680182031, 'pinda'),
-(29, 'peiter', 2, 3, '1444LO', 'familiepeiter@gmail.com', 680182036, 'Array');
+(29, 'peiter', 2, 3, '1444LO', 'familiepeiter@gmail.com', 680182036, 'Array'),
+(30, 'rodenberg', 2, 2, '1333NB', 'rodenberg@rodenberg.com', 2147483647, 'Array');
 
 -- --------------------------------------------------------
 
@@ -243,7 +244,7 @@ ALTER TABLE `bestelling`
 -- AUTO_INCREMENT voor een tabel `gezinnen`
 --
 ALTER TABLE `gezinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT voor een tabel `leveranciers`

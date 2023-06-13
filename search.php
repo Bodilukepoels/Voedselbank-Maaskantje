@@ -1,29 +1,35 @@
 <?php
-include "config.php";
+// Database connection details
+$servername = "your_servername";
+$username = "your_username";
+$password = "your_password";
+$dbname = "producten";
 
-$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+// Create a connection to the database
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-try {
-    $sql = "SELECT * FROM producten WHERE naam LIKE ? ORDER BY naam";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$searchQuery . '%']);
-    $products = $stmt->fetchAll();
-} catch (PDOException $e) {
-    echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
-    exit();
+// Check if the connection was successful
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-if (count($products) > 0) {
-    echo "<ul class='list-group'>";
+// Retrieve the search query from the form submission
+$query = $_GET['query'];
 
-    foreach ($products as $product) {
-        echo "<li class='list-group-item'>
-                <a href='#product-{$product['id']}' class='product-link'>{$product['naam']}</a>
-            </li>";
-    }
+// Prepare the SQL statement
+$sql = "SELECT * FROM products WHERE name LIKE '%$query%' OR category LIKE '%$query%' OR ean_number = '$query'";
 
-    echo "</ul>";
-} else {
-    echo "<div class='alert alert-info'>Geen producten gevonden.</div>";
+// Execute the SQL statement
+$result = mysqli_query($conn, $sql);
+
+// Display the search results
+while ($row = mysqli_fetch_assoc($result)) {
+    // Display the product information
+    echo "Name: " . $row['naam'] . "<br>";
+    echo "Category: " . $row['category'] . "<br>";
+    echo "EAN Number: " . $row['ean_number'] . "<br><br>";
 }
+
+// Close the database connection
+mysqli_close($conn);
 ?>

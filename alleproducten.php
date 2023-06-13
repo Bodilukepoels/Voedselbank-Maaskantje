@@ -13,12 +13,10 @@
     ?>
     <br>
     <CENTER><h1 style="color: black;">Overzicht producten</h1>
-    <form method="GET" action="">
-        Filter by name (A-Z): <input type="checkbox" name="sortname" value="1">
-        Filter by category: <input type="text" name="filtercategory">
-        Search: <input type="text" name="search">
-        <input type="submit" value="Filter/Search">
-    </form>
+    <form method="GET" action="search.php">
+    Search: <input type="text" name="query">
+    <input type="submit" value="Search">
+</form>
     <div class="table-responsive mt-4">
         <table class="table table-striped">
         <tr>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 12 jun 2023 om 21:02
--- Serverversie: 10.4.28-MariaDB
--- PHP-versie: 8.2.4
+-- Gegenereerd op: 13 jun 2023 om 13:33
+-- Serverversie: 10.4.25-MariaDB
+-- PHP-versie: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `bestelling` (
   `BestellingID` int(11) NOT NULL,
   `KoperAccountID` int(11) NOT NULL,
   `BestelingInhoud` varchar(999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,7 +42,7 @@ CREATE TABLE `bestelling` (
 CREATE TABLE `extra` (
   `beschikbare_allergieën` varchar(255) NOT NULL,
   `beschikbare_categorieën` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `extra`
@@ -74,7 +74,7 @@ CREATE TABLE `gezinnen` (
   `mail` varchar(255) NOT NULL,
   `telefoonnummer` int(11) NOT NULL,
   `wensen` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `gezinnen`
@@ -98,7 +98,7 @@ CREATE TABLE `leveranciers` (
   `postcode` varchar(6) NOT NULL,
   `bezorgingsdatum` date NOT NULL,
   `bezorgingstijd` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `leveranciers`
@@ -120,14 +120,14 @@ CREATE TABLE `producten` (
   `beschrijving` varchar(100) NOT NULL,
   `categorie` varchar(500) NOT NULL,
   `voorraad` int(11) NOT NULL,
-  `EAN-Nummer` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `EAN_Nummer` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `producten`
 --
 
-INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, `EAN-Nummer`) VALUES
+INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, `EAN_Nummer`) VALUES
 (29, 'kaas', 'kaas', 'Bakkerij en Banket', 100, '11267532348'),
 (30, 'melk', 'melk', 'Snoep, Koek, Chips en Chocolade', 200, '12345678910'),
 (31, 'groene melk', 'de melk is groen', 'Sappen', 100, '29343232457324732748');
@@ -145,7 +145,7 @@ CREATE TABLE `user` (
   `Naam` varchar(100) NOT NULL,
   `Telefoonnummer` varchar(100) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
@@ -172,7 +172,7 @@ CREATE TABLE `voedselpakket` (
   `aantal_pakketten` int(11) NOT NULL,
   `samenstellingsdatum` date NOT NULL DEFAULT '0000-00-00',
   `ophaaldatum` date NOT NULL DEFAULT '0000-00-00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `voedselpakket`

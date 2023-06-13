@@ -134,7 +134,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 echo "<td>" . $product['beschrijving'] . "</td>";
                                 echo "<td>" . $product['categorie'] . "</td>";
                                 echo "<td>" . $product['voorraad'] . "</td>";
-                                echo "<td>" . $product['EAN-Nummer'] . "</td>";
+                                echo "<td>" . $product['EAN_Nummer'] . "</td>";
                                 echo "<td>
                                     <a href='edit_product.php?id=" . $product['id'] . "' class='btn btn-primary btn-sm'>Bewerk</a>
                                     <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $product['id'] . "'>Verwijder</button>

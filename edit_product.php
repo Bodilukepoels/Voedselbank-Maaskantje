@@ -114,7 +114,7 @@ try {
 
             <div class="form-group">
                 <label for="eanNummer">EAN Nummer:</label>
-                <input type="text" class="form-control" id="eanNummer" name="eanNummer" value="<?php echo $product['EAN-Nummer']; ?>" required>
+                <input type="text" class="form-control" id="eanNummer" name="eanNummer" value="<?php echo $product['EAN_Nummer']; ?>" required>
             </div>
 
             <input type="submit" class="btn btn-primary" value="Update Product">

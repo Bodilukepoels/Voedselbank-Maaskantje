@@ -66,7 +66,7 @@
                 echo "<td>" . $product['beschrijving'] . "</td>";
                 echo "<td>" . $product['categorie'] . "</td>";
                 echo "<td>" . $product['voorraad'] . "</td>";
-                echo "<td>" . $product['EAN-Nummer'] . "</td>";
+                echo "<td>" . $product['EAN_Nummer'] . "</td>";
                 echo "</tr>";
             }
         } catch (PDOException $e) {

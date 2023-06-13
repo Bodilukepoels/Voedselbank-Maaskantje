@@ -6,23 +6,17 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     header("Location: index.php");
     exit();
 }
-if (isset($_GET['package_id'])) {
-    $packageId = $_GET['package_id'];
 
-    try {
-        $stmt = $conn->prepare("SELECT * FROM voedselpakket WHERE id = :packageId");
-        $stmt->bindParam(':packageId', $packageId);
-        $stmt->execute();
-        $package = $stmt->fetch();
+try {
+    $stmt = $conn->prepare("SELECT * FROM voedselpakket");
+    $stmt->execute();
+    $packages = $stmt->fetchAll();
 
-        if (!$package) {
-            $errorMessage = "Het voedselpakket met ID " . $packageId . " kon niet worden gevonden.";
-        }
-    } catch (PDOException $e) {
-        $errorMessage = "Er is een fout opgetreden bij het ophalen van het voedselpakket: " . $e->getMessage();
+    if (count($packages) == 0) {
+        $errorMessage = "Er zijn geen voedselpakketten gevonden.";
     }
-} else {
-    $errorMessage = "Geen voedselpakket ID opgegeven.";
+} catch (PDOException $e) {
+    $errorMessage = "Er is een fout opgetreden bij het ophalen van de voedselpakketten: " . $e->getMessage();
 }
 ?>
 
@@ -87,23 +81,25 @@ if (isset($_GET['package_id'])) {
 
 <body>
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Details voedselpakket</h2>
-            </div>
-            <div class="card-body">
-                <?php if (isset($package)) : ?>
-                    <p><strong>Naam van het voedselpakket:</strong> <?php echo $package['naam']; ?></p>
-                    <p><strong>Aantal pakketten:</strong> <?php echo $package['aantal_pakketten']; ?></p>
-                    <p><strong>Samenstellingsdatum:</strong> <?php echo $package['samenstellingsdatum']; ?></p>
-                    <p><strong>Ophaaldatum:</strong> <?php echo $package['ophaaldatum']; ?></p>
-                    <p><strong>Geselecteerde producten:</strong> <?php echo $package['producten']; ?></p>
-                <?php else : ?>
-                    <p class="error-message"><?php echo $errorMessage; ?></p>
-                <?php endif; ?>
-            </div>
-        </div>
+        <?php if (isset($errorMessage)) : ?>
+            <p class="error-message"><?php echo $errorMessage; ?></p>
+        <?php else : ?>
+            <?php foreach ($packages as $package) : ?>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Details voedselpakket</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Naam van het voedselpakket:</strong> <?php echo $package['naam']; ?></p>
+                        <p><strong>Aantal pakketten:</strong> <?php echo $package['aantal_pakketten']; ?></p>
+                        <p><strong>Samenstellingsdatum:</strong> <?php echo $package['samenstellingsdatum']; ?></p>
+                        <p><strong>Ophaaldatum:</strong> <?php echo $package['ophaaldatum']; ?></p>
+                        <p><strong>Geselecteerde producten:</strong> <?php echo $package['producten']; ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div><br>
     <CENTER><img src="https://cdn.pixabay.com/photo/2012/04/24/16/17/box-40302_960_720.png" width="200px" style="cursor: pointer;">
 </body>
-</html>
+</html> 

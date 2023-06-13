@@ -17,7 +17,7 @@ if (!$conn) {
 $query = $_GET['query'];
 
 // Prepare the SQL statement
-$sql = "SELECT * FROM products WHERE name LIKE '%$query%' OR category LIKE '%$query%' OR ean_number = '$query'";
+$sql = "SELECT * FROM products WHERE name LIKE '%$naam%' OR category LIKE '%$query%' OR ean_number = '$query'";
 
 // Execute the SQL statement
 $result = mysqli_query($conn, $sql);
@@ -25,9 +25,9 @@ $result = mysqli_query($conn, $sql);
 // Display the search results
 while ($row = mysqli_fetch_assoc($result)) {
     // Display the product information
-    echo "Name: " . $row['naam'] . "<br>";
-    echo "Category: " . $row['category'] . "<br>";
-    echo "EAN Number: " . $row['ean_number'] . "<br><br>";
+    echo "Naam: " . $row['naam'] . "<br>";
+    echo "Categorie: " . $row['categorie'] . "<br>";
+    echo "EAN Nummer: " . $row['EAN-Nummer'] . "<br><br>";
 }
 
 // Close the database connection

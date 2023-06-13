@@ -24,7 +24,7 @@
             <th>Postcode</th>
             <th>Mail</th>
             <th>Telefoonnummer</th>
-            <th>Wensen</th>
+            <th>Wensen en allergieën</th>
         </tr>
         </div>
         </CENTER>

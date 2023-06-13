@@ -90,12 +90,12 @@ if ($row && $row['role'] == "3") {
 
     <div class="form-group">
         <label>Volwassenen:</label>
-        <input type="text" class="form-control" id="volwassenen" name="volwassenen" required>
+        <input type="number" class="form-control" id="volwassenen" name="volwassenen" required>
     </div>
 
     <div class="form-group">
         <label>Kinderen:</label>
-        <input type="text" class="form-control" id="kinderen" name="kinderen" required>
+        <input type="number" class="form-control" id="kinderen" name="kinderen" required>
     </div>
 
     <div class="form-group">
@@ -114,11 +114,11 @@ if ($row && $row['role'] == "3") {
     </div>
 
     <div class="form-group">
-        <label>Allergieën:</label>
+        <label>Wensen en Allergieën:</label>
         <div id="allergieën-container">
             <div class="input-group mb-2">
                 <select class="form-control allergieën-select" name="allergieën[]" required>
-                    <option value="">Selecteer allergie</option>
+                    <option value="">Selecteer wensen en allergie</option>
                         <?php foreach ($allergieën as $allergie): ?>
                         <option value="<?php echo $allergie; ?>"><?php echo $allergie; ?></option>
                     <?php endforeach; ?>
@@ -147,7 +147,7 @@ if ($row && $row['role'] == "3") {
             <th>Postcode</th>
             <th>Mail</th>
             <th>Telefoonnummer</th>
-            <th>Allergieën</th>
+            <th>Wensen en Allergieën</th>
             <th>Acties</th>
         </tr>
         </thead>
@@ -155,6 +155,9 @@ if ($row && $row['role'] == "3") {
         <?php
         try {
             $gezinnen = $db->query("SELECT * FROM gezinnen")->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $gezinnen = $stmt->fetchAll();
             if ($gezinnen) {
                 foreach ($gezinnen as $gezin) {
                     echo "<tr>";

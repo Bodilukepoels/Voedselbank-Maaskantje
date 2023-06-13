@@ -11,14 +11,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$gezinnenId]);
 
-            header("Location: overzichtklanten1.php?success=1");
+            header("Location: gezintoevoegen.php?success=1");
             exit();
         } catch (PDOException $e) {
-            header("Location: overzichtklanten1.php?success=0");
+            header("Location: gezintoevoegen.php?success=2");
             exit();
         }
     } else {
-        header("Location: overzichtklanten1.php");
+        header("Location: gezintoevoegen.php");
         exit();
     }
 } else {

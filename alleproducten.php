@@ -51,7 +51,7 @@
         }
 
         if (isset($_GET['sortname']) && $_GET['sortname'] == "1") {
-            $sql .= " ORDER BY naam";
+            $sql .= " ORDER BY naam ASC";
         }
 
         try {

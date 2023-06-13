@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $eanNummer = $_POST['eanNummer'];
 
     try {
-        $sql = "UPDATE producten SET naam = ?, beschrijving = ?, categorie = ?, voorraad = ?, `EAN-Nummer` = ? WHERE id = ?";
+        $sql = "UPDATE producten SET naam = ?, beschrijving = ?, categorie = ?, voorraad = ?, `EAN_Nummer` = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer, $id]);
         header("Location: productentoevoegen.php?success=3");

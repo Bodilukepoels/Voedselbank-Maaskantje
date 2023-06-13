@@ -33,7 +33,7 @@
         include 'config.php';
 
         // Retrieve the search query from the form submission
-        $query = $_GET['query'];
+        $query = "%".$_GET['query']."%";
 
         try {
             // Prepare the SQL statement

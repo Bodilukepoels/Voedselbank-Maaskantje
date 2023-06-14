@@ -1,7 +1,7 @@
 <?php
 include "navigation.php";
 
-if ($row && $row['role'] >= "3") {
+if ($row && $row['role'] == "3") {
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         include "config.php";
         try {

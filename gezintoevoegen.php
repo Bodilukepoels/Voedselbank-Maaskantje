@@ -13,7 +13,8 @@ if ($row && $row['role'] == "3") {
             $options = array();
         }
 
-        $allergieën = array_merge(array('            '), $options);
+        $allergieën = array_merge(['            '], $options);
+
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $naam = $_POST['naam'];
@@ -141,33 +142,42 @@ if ($row && $row['role'] == "3") {
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>Id</th>
             <th>Gezinsnaam</th>
             <th>Volwassenen</th>
             <th>Kinderen</th>
             <th>Postcode</th>
             <th>Mail</th>
             <th>Telefoonnummer</th>
-            <th>Wensen en Allergieën</th>
+            <th>Wensen/Allergieën</th>
             <th>Acties</th>
         </tr>
         </thead>
         <tbody>
         <?php
         try {
-            $gezinnen = $db->query("SELECT * FROM gezinnen")->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM gezinnen";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $gezinnen = $stmt->fetchAll();
-            if ($gezinnen) {
-                foreach ($gezinnen as $gezin) {
-                    echo "<tr>";
-                    echo "<td>" . $gezin['naam'] . "</td>";
-                    echo "<td>" . $gezin['volwassenen'] . "</td>";
-                    echo "<td>" . $gezin['kinderen'] . "</td>";
-                    echo "<td>" . $gezin['postcode'] . "</td>";
-                    echo "<td>" . $gezin['mail'] . "</td>";
-                    echo "<td>" . $gezin['telefoonnummer'] . "</td>";
-                    echo "<td>" . implode(", ", json_decode($gezin['allergieën'], true)) . "</td>";
+
+            foreach ($gezinnen as $gezin) {
+                echo "<tr>";
+                echo "<td>" . $gezin['id'] . "</td>";
+                echo "<td>" . $gezin['naam'] . "</td>";
+                echo "<td>" . $gezin['volwassenen'] . "</td>";
+                echo "<td>" . $gezin['kinderen'] . "</td>";
+                echo "<td>" . $gezin['postcode'] . "</td>";
+                echo "<td>" . $gezin['mail'] . "</td>";
+                echo "<td>" . $gezin['telefoonnummer'] . "</td>";
+                $wensen = json_decode($gezin['wensen'], true);
+                if (is_array($wensen)) {
+                    echo "<td>" . implode(", ", $wensen) . "</td>";
+                } else {
+                    echo "<td></td>";
+                }
+
+                    
                     echo "<td>                               
                         <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#confirmDeleteModal" . $gezin['id'] . "'>Verwijder</button>
                     </td>";
@@ -176,7 +186,7 @@ if ($row && $row['role'] == "3") {
                         <div class='modal-dialog' role='document'>
                             <div class='modal-content'>
                                 <div class='modal-header'>
-                                    <h5 class='modal-title' id='confirmDeleteModalLabel" . $gezin['id'] . "'>Bevestiging</h5>
+                       <h5 class='modal-title' id='confirmDeleteModalLabel" . $gezin['id'] . "'>Bevestiging</h5>
                                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                                         <span aria-hidden='true'>&times;</span>
                                     </button>
@@ -192,10 +202,11 @@ if ($row && $row['role'] == "3") {
                         </div>
                     </div>";
                 }
+            } catch (PDOException $e) {
+                echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
             }
-        } catch (PDOException $e) {
-            echo "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
-        }
+
+
         ?>
         </tbody>
     </table>

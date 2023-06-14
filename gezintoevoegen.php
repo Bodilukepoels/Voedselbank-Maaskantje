@@ -127,26 +127,26 @@ if ($row && $row['role'] == "3") {
 
                     <div class="form-group">
                         <label>Telefoonnummer:</label>
-                        <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" required>
+                        <input type="number" class="form-control" id="telefoonnummer" name="telefoonnummer" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Wensen en Allergieën:</label>
-                        <div id="allergieën-container">
-                            <div class="input-group mb-2">
-                                <select class="form-control allergieën-select" name="wensen_allergieën[]" required>
-                                    <option value="">Selecteer wensen en allergie</option>
-                                    <?php foreach ($allergieën as $allergie): ?>
-                                        <option value="<?php echo $allergie; ?>"><?php echo $allergie; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-danger delete-allergy">-</button>
-                                </div>
+                    <label>Wensen en Allergieën:</label>
+                    <div id="allergieën-container">
+                        <div class="input-group mb-2">
+                            <select class="form-control allergieën-select" name="wensen_allergieën[]" required>
+                                <?php foreach ($allergieën as $allergie): ?>
+                                    <option value="<?php echo $allergie; ?>"><?php echo $allergie; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-danger delete-allergy">-</button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary mt-2" id="add-allergy">+</button>
                     </div>
+                    <button type="button" class="btn btn-primary mt-2" id="add-allergy">+</button>
+                </div>
+
 
                     <button type="submit" class="btn btn-primary btn-block">Gezin toevoegen</button>
                 </form>

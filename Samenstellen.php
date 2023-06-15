@@ -12,9 +12,9 @@
             $foodPackageName = $_POST['foodPackageName'];
             $creationDate = $_POST['creationDate'];
             $pickupDate = $_POST['pickupDate'];
-
-            $familyName = $gezin['naam'];
-            $voedselpakketName = "pakket " . $familyName;
+            
+            $gezin = 'naam';
+            $voedselpakketName = "pakket " . $gezin;
 
             try {
                 $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, samenstellingsdatum, ophaaldatum) VALUES (:naam, :producten, :samenstellingsdatum, :ophaaldatum)");

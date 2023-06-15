@@ -16,30 +16,31 @@
             $gezin = 'naam';
             $voedselpakketName = "pakket " . $gezin;
 
-            try {
-                $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, samenstellingsdatum, ophaaldatum) VALUES (:naam, :producten, :samenstellingsdatum, :ophaaldatum)");
+        try {
+            $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, samenstellingsdatum, ophaaldatum, OwnerID) VALUES (:naam, :producten, :samenstellingsdatum, :ophaaldatum, :gezin_id)");
 
-                $productString = '';
-                foreach ($selectedProducts as $productId => $quantity) {
-                    $product = getProductById($conn, $productId);
-                    $productName = $product['naam'];
-                    $productString .= $productName . ' x' . $quantity . ', ';
+            $productString = '';
+            foreach ($selectedProducts as $productId => $quantity) {
+                $product = getProductById($conn, $productId);
+                $productName = $product['naam'];
+                $productString .= $productName . ' x' . $quantity . ', ';
 
-                    $newStock = $product['voorraad'] - $quantity;
-                    updateProductStock($conn, $productId, $newStock);
-                }
-                $productString = rtrim($productString, ', ');
-
-                $stmt->bindParam(':naam', $voedselpakketName);
-                $stmt->bindParam(':producten', $productString);
-                $stmt->bindParam(':samenstellingsdatum', $creationDate);
-                $stmt->bindParam(':ophaaldatum', $pickupDate);
-                $stmt->execute();
-
-                $successMessage = "Producten geplaatst in de database.";
-            } catch (PDOException $e) {
-                $errorMessage = "Error producten toevoegen: " . $e->getMessage();
+                $newStock = $product['voorraad'] - $quantity;
+                updateProductStock($conn, $productId, $newStock);
             }
+            $productString = rtrim($productString, ', ');
+
+            $stmt->bindParam(':naam', $voedselpakketName);
+            $stmt->bindParam(':producten', $productString);
+            $stmt->bindParam(':samenstellingsdatum', $creationDate);
+            $stmt->bindParam(':ophaaldatum', $pickupDate);
+            $stmt->bindParam(':gezin_id', $currentFamilyId);
+            $stmt->execute();
+
+            $successMessage = "Producten geplaatst in de database.";
+        } catch (PDOException $e) {
+            $errorMessage = "Error producten toevoegen: " . $e->getMessage();
+        }
         } else {
             $errorMessage = "Geen producten geselecteerd.";
         }
@@ -106,58 +107,7 @@
         <meta charset="UTF-8">
         <title>Voedselpakket samenstellen</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            body {
-                background-color: #f8f9fa;
-            }
-
-            .container {
-                max-width: 600px;
-            }
-
-            .mt-5 {
-                margin-top: 3rem !important;
-            }
-
-            .mb-4 {
-                margin-bottom: 2rem !important;
-            }
-
-            .mb-3 {
-                margin-bottom: 1rem !important;
-            }
-
-            .text-danger {
-                color: red;
-            }
-
-            .text-success {
-                color: green;
-            }
-
-            .food-package-window {
-                background-color: white;
-                padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            .gezinnen-window {
-                position: fixed;
-                top: 50%;
-                right: 0;
-                transform: translateY(-50%);
-                background-color: white;
-                padding: 20px;
-                z-index: 600;
-                width: 300px;
-                max-height: 400px;
-                overflow-y: auto;
-            }
-
-            th {
-                font-size: 15px;
-            }
-        </style>
+        <link href="samenstellen.css" rel="stylesheet">
     </head>
 
     <body>

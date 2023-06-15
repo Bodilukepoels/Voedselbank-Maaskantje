@@ -39,7 +39,7 @@
 
             foreach ($gezinnen as $gezin) {
                 echo "<tr>";
-                echo "<td>" . $gezin['accountid'] . "</td>";
+                echo "<td>" . $gezin['id'] . "</td>";
                 echo "<td>" . $gezin['naam'] . "</td>";
                 echo "<td>" . $gezin['volwassenen'] . "</td>";
                 echo "<td>" . $gezin['kinderen'] . "</td>";

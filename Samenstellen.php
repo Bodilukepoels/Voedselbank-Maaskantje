@@ -22,6 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $product = getProductById($conn, $productId);
                 $productName = $product['naam'];
                 $productString .= $productName . ' x' . $quantity . ', ';
+
+                // Subtract selected quantity from available stock
+                $newStock = $product['voorraad'] - $quantity;
+                updateProductStock($conn, $productId, $newStock);
             }
             $productString = rtrim($productString, ', ');
 
@@ -57,6 +61,14 @@ function getProductById($conn, $productId)
     $stmt->bindParam(':id', $productId);
     $stmt->execute();
     return $stmt->fetch();
+}
+
+function updateProductStock($conn, $productId, $newStock)
+{
+    $stmt = $conn->prepare("UPDATE producten SET voorraad = :voorraad WHERE id = :id");
+    $stmt->bindParam(':voorraad', $newStock);
+    $stmt->bindParam(':id', $productId);
+    $stmt->execute();
 }
 
 try {

@@ -25,11 +25,14 @@
             <th>Mail</th>
             <th>Telefoonnummer</th>
             <th>Wensen en allergieën</th>
+            <th>Pakket:</th>
         </tr>
         </div>
         </CENTER>
         <?php
         include 'config.php';
+
+        $_SESSION['gezin'] = $gezin;
 
         try {
             $sql = "SELECT * FROM gezinnen";
@@ -47,6 +50,7 @@
                 echo "<td>" . $gezin['mail'] . "</td>";
                 echo "<td>" . $gezin['telefoonnummer'] . "</td>";
                 echo "<td>" . $gezin['wensen'] . "</td>";
+                echo "<td>" . "<a href='samenstellen.php?id=" . $gezin['id'] . "' class='btn btn-primary btn-sm'>Pakket maken</a>";
                 echo "</tr>";
             }
         } catch (PDOException $e) {

@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Gegenereerd op: 13 jun 2023 om 13:49
--- Serverversie: 10.4.25-MariaDB
--- PHP-versie: 8.1.10
+-- Host: localhost:3306
+-- Gegenereerd op: 15 jun 2023 om 15:03
+-- Serverversie: 8.0.31
+-- PHP-versie: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bestelling` (
-  `BestellingID` int(11) NOT NULL,
-  `KoperAccountID` int(11) NOT NULL,
+  `BestellingID` int NOT NULL,
+  `KoperAccountID` int NOT NULL,
   `BestelingInhoud` varchar(999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -42,22 +42,22 @@ CREATE TABLE `bestelling` (
 CREATE TABLE `extra` (
   `beschikbare_allergieën` varchar(255) NOT NULL,
   `beschikbare_categorieën` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `extra`
 --
 
 INSERT INTO `extra` (`beschikbare_allergieën`, `beschikbare_categorieën`) VALUES
-('melk(eiwit) allergie', 'Pasta, Rijst en wereldkeuken'),
-('niks', 'Aardappelen, Groente, Fruit'),
-('notenallergie', 'Zuivel, Plantaardig en eieren'),
-('pindaallergie', 'Bakkerij en Banket'),
-('schaaldierenallergie', 'Baby, Verzorging, Hygiene'),
-('sesamallergie', 'Frisdrank, Sappen, Kofie en Thee'),
-('sojaallergie', 'Soepen, Sauzen, Kruiden en Olie'),
-('tarweallergie', 'Kaas, Vleeswaren'),
-('visallergie', 'Snoep, Koek, Chips en Chocolade');
+('Melk(eiwit) allergie', 'Pasta, Rijst en wereldkeuken'),
+('Niks', 'Aardappelen, Groente, Fruit'),
+('Notenallergie', 'Zuivel, Plantaardig en eieren'),
+('Pindaallergie', 'Bakkerij en Banket'),
+('Sesamallergie', 'Frisdrank, Sappen, Kofie en Thee'),
+('Snelle bezorging', 'Baby, Verzorging, Hygiene'),
+('Sojaallergie', 'Soepen, Sauzen, Kruiden en Olie'),
+('Tarweallergie', 'Kaas, Vleeswaren'),
+('Visallergie', 'Snoep, Koek, Chips en Chocolade');
 
 -- --------------------------------------------------------
 
@@ -66,24 +66,25 @@ INSERT INTO `extra` (`beschikbare_allergieën`, `beschikbare_categorieën`) VALU
 --
 
 CREATE TABLE `gezinnen` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `naam` varchar(200) NOT NULL,
-  `volwassenen` int(11) NOT NULL,
-  `kinderen` int(11) NOT NULL,
+  `volwassenen` int NOT NULL,
+  `kinderen` int NOT NULL,
   `postcode` varchar(25) NOT NULL,
   `mail` varchar(255) NOT NULL,
-  `telefoonnummer` int(11) NOT NULL,
-  `wensen` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `telefoonnummer` int NOT NULL,
+  `wensen` varchar(255) NOT NULL,
+  `pakket` varchar(55) NOT NULL
+) ENGINE=innodb default charset=utf8 collate=utf8_general_ci
 
 --
 -- Gegevens worden geëxporteerd voor tabel `gezinnen`
 --
 
-INSERT INTO `gezinnen` (`id`, `naam`, `volwassenen`, `kinderen`, `postcode`, `mail`, `telefoonnummer`, `wensen`) VALUES
-(27, 'Mark', 2, 3, '1444LO', 'familiemark@gmail.com', 680182031, 'pinda'),
-(29, 'peiter', 2, 3, '1444LO', 'familiepeiter@gmail.com', 680182036, 'Array'),
-(30, 'rodenberg', 2, 2, '1333NB', 'rodenberg@rodenberg.com', 2147483647, 'Array');
+INSERT INTO `gezinnen` (`id`, `naam`, `volwassenen`, `kinderen`, `postcode`, `mail`, `telefoonnummer`, `wensen`, `pakket`) VALUES
+(48, 'peiters', 2, 2, '1333bn', 'mongus@gmail.com', 2147483647, 'notenallergie, niks', ''),
+(49, 'peiters', 2, 2, '1333bn', 'mongus@gmail.com', 2147483647, 'notenallergie, niks', ''),
+(61, 'kaas', 2, 3, '1441LO', 'kaas@gmail.com', 682836458, 'notenallergie, sesamallergie, tarweallergie', '');
 
 -- --------------------------------------------------------
 
@@ -92,14 +93,14 @@ INSERT INTO `gezinnen` (`id`, `naam`, `volwassenen`, `kinderen`, `postcode`, `ma
 --
 
 CREATE TABLE `leveranciers` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `naam` varchar(255) NOT NULL,
   `mail` varchar(100) NOT NULL,
-  `telefoonnummer` int(11) NOT NULL,
+  `telefoonnummer` int NOT NULL,
   `postcode` varchar(6) NOT NULL,
   `bezorgingsdatum` date NOT NULL,
   `bezorgingstijd` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=innodb default charset=utf8 collate=utf8_general_ci
 
 --
 -- Gegevens worden geëxporteerd voor tabel `leveranciers`
@@ -116,22 +117,22 @@ INSERT INTO `leveranciers` (`id`, `naam`, `mail`, `telefoonnummer`, `postcode`, 
 --
 
 CREATE TABLE `producten` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `naam` varchar(255) NOT NULL,
   `beschrijving` varchar(100) NOT NULL,
   `categorie` varchar(500) NOT NULL,
-  `voorraad` int(11) NOT NULL,
+  `voorraad` int NOT NULL,
   `EAN_Nummer` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `producten`
 --
 
 INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, `EAN_Nummer`) VALUES
-(29, 'kaas', 'kaas', 'Bakkerij en Banket', 100, '11267532348'),
-(30, 'melk', 'melk', 'Snoep, Koek, Chips en Chocolade', 200, '12345678910'),
-(31, 'groene melk', 'de melk is groen', 'Sappen', 100, '29343232457324732748');
+(29, 'kaas', 'kaas', 'Bakkerij en Banket', 54, '11267532348'),
+(30, 'melk', 'melk', 'Snoep, Koek, Chips en Chocolade', 149, '12345678910'),
+(31, 'groene melk', 'de melk is groen', 'Sappen', 59, '29343232457324732748');
 
 -- --------------------------------------------------------
 
@@ -140,13 +141,13 @@ INSERT INTO `producten` (`id`, `naam`, `beschrijving`, `categorie`, `voorraad`, 
 --
 
 CREATE TABLE `user` (
-  `AccountID` int(11) NOT NULL,
+  `AccountID` int NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Wachtwoord` varchar(255) NOT NULL,
   `Naam` varchar(100) NOT NULL,
   `Telefoonnummer` varchar(100) NOT NULL,
-  `role` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `role` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
@@ -167,21 +168,29 @@ INSERT INTO `user` (`AccountID`, `Email`, `Wachtwoord`, `Naam`, `Telefoonnummer`
 --
 
 CREATE TABLE `voedselpakket` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `naam` varchar(255) NOT NULL,
   `producten` varchar(255) NOT NULL,
-  `aantal_pakketten` int(11) NOT NULL,
   `samenstellingsdatum` date NOT NULL DEFAULT '0000-00-00',
   `ophaaldatum` date NOT NULL DEFAULT '0000-00-00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `voedselpakket`
 --
 
-INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `aantal_pakketten`, `samenstellingsdatum`, `ophaaldatum`) VALUES
-(11, 'Familiepakket', 'kaas x3, melk x3, groene melk x4', 24, '2023-06-13', '2023-06-22'),
-(12, 'yes', 'kaas x1, melk x2, groene melk x24', 32, '2023-06-20', '2023-06-30');
+INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `samenstellingsdatum`, `ophaaldatum`) VALUES
+(11, 'Familiepakket', 'kaas x3, melk x3, groene melk x4', '2023-06-13', '2023-06-22'),
+(12, 'yes', 'kaas x1, melk x2, groene melk x24', '2023-06-20', '2023-06-30'),
+(13, 'ik hou van melk', 'groene melk x3, kaas x1, melk x5', '2023-06-21', '2023-06-23'),
+(14, 'ik hou van melkll', 'groene melk x3, kaas x4, melk x5', '2023-06-21', '2023-06-24'),
+(15, 'ik hou van eten', 'groene melk x2, kaas x3, melk x4', '2023-06-20', '2023-06-25'),
+(16, 'pakket ', 'groene melk x4, kaas x4, melk x4', '2023-06-16', '2023-06-17'),
+(19, 'pakket ', 'groene melk x3, kaas x3, melk x3', '2023-06-20', '2023-06-23'),
+(20, 'pakket ', 'groene melk x3, kaas x3, melk x3', '2023-06-20', '2023-06-23'),
+(21, 'pakket ', 'groene melk x4, kaas x4, melk x4', '2023-06-22', '2023-06-23'),
+(22, 'pakket ', 'groene melk x4, kaas x4, melk x4', '2023-06-22', '2023-06-23'),
+(23, 'pakket ', 'groene melk x4, kaas x4, melk x4', '2023-06-19', '2023-06-23');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -238,37 +247,37 @@ ALTER TABLE `voedselpakket`
 -- AUTO_INCREMENT voor een tabel `bestelling`
 --
 ALTER TABLE `bestelling`
-  MODIFY `BestellingID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `BestellingID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT voor een tabel `gezinnen`
 --
 ALTER TABLE `gezinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT voor een tabel `leveranciers`
 --
 ALTER TABLE `leveranciers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT voor een tabel `producten`
 --
 ALTER TABLE `producten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `AccountID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `voedselpakket`
 --
 ALTER TABLE `voedselpakket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

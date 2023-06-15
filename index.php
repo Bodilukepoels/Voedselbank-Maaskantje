@@ -16,7 +16,7 @@
     }
     else{
         // dit wordt ge-echo'd wanneer  account niet is ingelogt
-        echo "<div style='color: black; box-shadow: 2px 2px 2px 2px; padding: 15px;'class='container'>
+        echo "<div style='color: black; box-shadow: 10px 10px 15px 10px gray; padding: 15px;'class='container'>
         <h2>Hallo medewerker!</h2>
         <a href='login.php'><h1>Login</h1></a>
     </div></div>";

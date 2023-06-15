@@ -91,7 +91,6 @@ try {
                     </div>
                     <div class="card-body">
                         <p><strong>Naam van het voedselpakket:</strong> <?php echo $package['naam']; ?></p>
-                        <p><strong>Aantal pakketten:</strong> <?php echo $package['aantal_pakketten']; ?></p>
                         <p><strong>Samenstellingsdatum:</strong> <?php echo $package['samenstellingsdatum']; ?></p>
                         <p><strong>Ophaaldatum:</strong> <?php echo $package['ophaaldatum']; ?></p>
                         <p><strong>Geselecteerde producten:</strong> <?php echo $package['producten']; ?></p>

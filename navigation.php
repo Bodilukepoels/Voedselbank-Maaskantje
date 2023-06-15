@@ -14,7 +14,7 @@
 session_start();
 include "config.php";
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 // HIERDOOR ZIE JE GEEN ERRORS, VOOR TROUBLESHOOTING PURPOSES ZET DEZE OP 1
 
 $query = "SELECT * FROM user WHERE naam = :user_name";
@@ -37,7 +37,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             <?php 
             if ($row && ($row['role'] >= "2")) {
             echo "<a href='leveranciersoverzicht.php'>Leveranciers</a>";
-            echo "<a href='overzichtgezinnen.php'>Gezinnen</a>";
             echo "<a href='overzichtgebruikers.php'>Gebruikers</a>"; 
           } 
           ?>
@@ -56,7 +55,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             ?>
           </div>
         </div>
-        <div onclick="location.href='samenstellen.php';">Voedselpakket</div>
+        <div onclick="location.href='overzichtgezinnen.php';">Voedselpakket</div>
         <div class="dropdown">
           <div style="color: black;">Welkom, <?php echo $_SESSION['user_name']; ?></div>
           <div class="dropdown-content">

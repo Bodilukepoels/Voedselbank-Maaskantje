@@ -14,7 +14,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         $eanNummer = $_POST['eanNummer'];
 
         try {
-            $sql = "INSERT INTO producten (naam, beschrijving, categorie, voorraad, `EAN-Nummer`) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO producten (naam, beschrijving, categorie, voorraad, `EAN_Nummer`) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$naam, $beschrijving, $categorie, $voorraad, $eanNummer]);
             $successMessage = "Het product is succesvol toegevoegd.";
@@ -98,7 +98,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
                     <div class="form-group">
                         <label>EAN Nummer:</label>
-                        <input type="text" class="form-control" id="eanNummer" name="eanNummer" required>
+                        <input type="text" class="form-control" id="eanNummer" name="ean_Nummer" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Product toevoegen</button>
                 </form>

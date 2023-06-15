@@ -7,8 +7,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['selectedProducts']) && !empty($_POST['selectedProducts'])) {
-        $selectedProducts = json_decode($_POST['selectedProducts'], true);
+    if (isset($_POST['quantities']) && !empty($_POST['quantities'])) {
+        $selectedProducts = $_POST['quantities'];
         $foodPackageName = $_POST['foodPackageName'];
         $numberOfPackages = $_POST['numberOfPackages'];
         $creationDate = $_POST['creationDate'];
@@ -58,6 +58,17 @@ function getProductById($conn, $productId)
     $stmt->execute();
     return $stmt->fetch();
 }
+
+try {
+    $sql = "SELECT * FROM gezinnen";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $gezinnen = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $errorMessage = $e->getMessage();
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -85,144 +96,163 @@ function getProductById($conn, $productId)
         }
 
         .mb-3 {
-            margin-bottom: 1.5rem !important;
+            margin-bottom: 1rem !important;
         }
 
-        .text-center {
-            text-align: center !important;
+        .text-danger {
+            color: red;
         }
 
-        .btn-primary {
-            background-color: #007bff !important;
-            border-color: #007bff !important;
+        .text-success {
+            color: green;
         }
 
-        .btn-primary:hover {
-            background-color: #0069d9 !important;
-            border-color: #0062cc !important;
+        .food-package-window {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-secondary {
-            background-color: #6c757d !important;
-            border-color: #6c757d !important;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268 !important;
-            border-color: #545b62 !important;
-        }
-
-        .alert-danger {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        #product-popup {
-            display: none;
+        .gezinnen-window {
             position: fixed;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            right: 0;
+            transform: translateY(-50%);
             background-color: white;
             padding: 20px;
             z-index: 999;
-        }
-
-        #product-popup .product-list {
+            width: 300px;
             max-height: 400px;
             overflow-y: auto;
         }
+        th {
+            font-size: 15px;
+        }
+    </style>
     </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Voedselpakket samenstellen</h1>
-        <button class="btn btn-primary mb-3" id="open-popup-btn">Voeg product toe</button>
-        <div id="product-popup">
-            <h3>Producten</h3>
-            <div class="product-list">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Hoeveelheid</th>
-                            <th>Beschikbaar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($products as $product) : ?>
-                            <tr>
-                                <td><?= $product['naam']; ?></td>
-                                <td>
-                                    <input type="number" class="form-control product-quantity" name="quantities[<?= $product['id']; ?>]" min="0" max="<?= $product['voorraad']; ?>">
-                                </td>
-                                <td><?= $product['voorraad']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <button class="btn btn-primary" id="add-products-btn">Voeg toe aan geselecteerde</button>
-            <button class="btn btn-secondary" id="close-popup-btn">Sluiten</button>
-        </div>
+        <h2 class="mb-4">Voedselpakket samenstellen</h2>
 
         <?php if (isset($successMessage)) : ?>
-            <div class="alert alert-success"><?= $successMessage ?></div>
+            <div class="alert alert-success" role="alert">
+                <?php echo $successMessage; ?>
+            </div>
         <?php endif; ?>
 
         <?php if (isset($errorMessage)) : ?>
-            <div class="alert alert-danger"><?= $errorMessage ?></div>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $errorMessage; ?>
+            </div>
         <?php endif; ?>
 
-        <h3>Geselecteerde producten</h3>
-        <ul id="selected-products-list"></ul>
-
-        <form method="POST" action="">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="form-group">
-                <label for="foodPackageName">Naam van het voedselpakket:</label>
+                <label for="foodPackageName">Naam voedselpakket</label>
                 <input type="text" class="form-control" id="foodPackageName" name="foodPackageName" required>
             </div>
+
             <div class="form-group">
-                <label for="numberOfPackages">Aantal pakketten:</label>
+                <label for="numberOfPackages">Aantal pakketten</label>
                 <input type="number" class="form-control" id="numberOfPackages" name="numberOfPackages" min="1" required>
             </div>
+
             <div class="form-group">
-                <label for="creationDate">Samenstellingstijd:</label>
+                <label for="creationDate">Samenstellingsdatum</label>
                 <input type="date" class="form-control" id="creationDate" name="creationDate" required>
             </div>
+
             <div class="form-group">
-                <label for="pickupDate">Ophaaldatum:</label>
+                <label for="pickupDate">Ophaaldatum</label>
                 <input type="date" class="form-control" id="pickupDate" name="pickupDate" required>
             </div>
-            <input type="hidden" name="selectedProducts" id="selected-products-input">
-            <button type="submit" class="btn btn-primary" id="create-package-btn">Creeer voedselpakket</button>
+
+            <div class="form-group">
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#product-modal" type="button">Voeg product toe</button>
+            </div>
+
+
+            <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="product-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="product-modal-label">Producten</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="product-list">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Hoeveelheid</th>
+                                            <th>Beschikbaar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($products as $product) : ?>
+                                            <tr>
+                                                <td><?= $product['naam']; ?></td>
+                                                <td>
+                                                    <input type="number" class="form-control product-quantity" name="quantities[<?= $product['id']; ?>]" min="0" max="<?= $product['voorraad']; ?>">
+                                                </td>
+                                                <td><?= $product['voorraad']; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="add-products-btn" data-dismiss="modal">Voeg toe aan geselecteerde</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="selected-products" id="selected-products-list"></ul>
+
+            <button type="submit" class="btn btn-primary">Creëer Voedselpakket</button>
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <div class="gezinnen-window">
+            <h3>Gezinnen</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Volwassenen</th>
+                        <th>Kinderen</th>
+                        <th>Wensen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($gezinnen as $gezin) : ?>
+                        <tr>
+                            <td><?= $gezin['naam']; ?></td>
+                            <td><?= $gezin['volwassenen']; ?></td>
+                            <td><?= $gezin['kinderen']; ?></td>
+                            <td><?= $gezin['wensen']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             var selectedProducts = {};
-
-            $('#open-popup-btn').click(function() {
-                $('#product-popup').show();
-            });
-
-            $('#close-popup-btn').click(function() {
-                $('#product-popup').hide();
-            });
 
             $('#add-products-btn').click(function() {
                 var hasInvalidQuantity = false;
@@ -249,15 +279,17 @@ function getProductById($conn, $productId)
                     $('#selected-products-list').empty();
 
                     $.each(selectedProducts, function(productId, quantity) {
-                        var productName = $('input[name="quantities[' + productId + ']"]').closest('tr').find('td:first').text();
-                        $('#selected-products-list').append('<li>' + productName + ' x' + quantity + '</li>');
+                        var productName = $("input[name='quantities[" + productId + "]']").closest('tr').find('td:first').text();
+                        var listItem = '<li>' + productName + ' x' + quantity + '</li>';
+                        $('#selected-products-list').append(listItem);
                     });
 
-                    $('#selected-products-input').val(JSON.stringify(selectedProducts));
-                    $('#product-popup').hide();
+                    var selectedProductsJSON = JSON.stringify(selectedProducts);
+                    $('input[name="selectedProducts"]').val(selectedProductsJSON);
                 }
             });
         });
     </script>
 </body>
+
 </html>

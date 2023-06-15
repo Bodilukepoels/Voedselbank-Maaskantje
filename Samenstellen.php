@@ -17,28 +17,29 @@
             $voedselpakketName = "pakket " . $familyName;
 
             try {
-                $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, samenstellingsdatum, ophaaldatum) VALUES (:naam, :producten, :samenstellingsdatum, :ophaaldatum)");
+            $stmt = $conn->prepare("INSERT INTO voedselpakket (naam, producten, samenstellingsdatum, ophaaldatum, user_id) VALUES (:naam, :producten, :samenstellingsdatum, :ophaaldatum, :user_id)");
 
-                $productString = '';
-                foreach ($selectedProducts as $productId => $quantity) {
-                    $product = getProductById($conn, $productId);
-                    $productName = $product['naam'];
-                    $productString .= $productName . ' x' . $quantity . ', ';
+            $productString = '';
+            foreach ($selectedProducts as $productId => $quantity) {
+                $product = getProductById($conn, $productId);
+                $productName = $product['naam'];
+                $productString .= $productName . ' x' . $quantity . ', ';
 
-                    $newStock = $product['voorraad'] - $quantity;
-                    updateProductStock($conn, $productId, $newStock);
-                }
-                $productString = rtrim($productString, ', ');
+                $newStock = $product['voorraad'] - $quantity;
+                updateProductStock($conn, $productId, $newStock);
+            }
+            $productString = rtrim($productString, ', ');
 
-                $stmt->bindParam(':naam', $voedselpakketName);
-                $stmt->bindParam(':producten', $productString);
-                $stmt->bindParam(':samenstellingsdatum', $creationDate);
-                $stmt->bindParam(':ophaaldatum', $pickupDate);
-                $stmt->execute();
+            $stmt->bindParam(':naam', $voedselpakketName);
+            $stmt->bindParam(':producten', $productString);
+            $stmt->bindParam(':samenstellingsdatum', $creationDate);
+            $stmt->bindParam(':ophaaldatum', $pickupDate);
+            $stmt->bindParam(':user_id', $_SESSION['userid']);
+            $stmt->execute();
 
-                $successMessage = "Producten geplaatst in de database.";
+            $successMessage = "Producten geplaatst in de database.";
             } catch (PDOException $e) {
-                $errorMessage = "Error producten toevoegen: " . $e->getMessage();
+            $errorMessage = "Error producten toevoegen: " . $e->getMessage();
             }
         } else {
             $errorMessage = "Geen producten geselecteerd.";

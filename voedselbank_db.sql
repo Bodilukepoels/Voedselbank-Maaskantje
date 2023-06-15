@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 15 jun 2023 om 15:08
+-- Gegenereerd op: 15 jun 2023 om 15:10
 -- Serverversie: 10.4.25-MariaDB
 -- PHP-versie: 8.1.10
 
@@ -20,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `voedselbank_db`
 --
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bestelling`
---
-
-CREATE TABLE `bestelling` (
-  `BestellingID` int(11) NOT NULL,
-  `KoperAccountID` int(11) NOT NULL,
-  `BestelingInhoud` varchar(999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -197,12 +185,6 @@ INSERT INTO `voedselpakket` (`id`, `naam`, `producten`, `samenstellingsdatum`, `
 --
 
 --
--- Indexen voor tabel `bestelling`
---
-ALTER TABLE `bestelling`
-  ADD PRIMARY KEY (`BestellingID`);
-
---
 -- Indexen voor tabel `extra`
 --
 ALTER TABLE `extra`
@@ -242,12 +224,6 @@ ALTER TABLE `voedselpakket`
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
 --
-
---
--- AUTO_INCREMENT voor een tabel `bestelling`
---
-ALTER TABLE `bestelling`
-  MODIFY `BestellingID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT voor een tabel `gezinnen`
